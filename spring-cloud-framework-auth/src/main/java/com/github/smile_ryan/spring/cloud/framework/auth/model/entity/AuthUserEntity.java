@@ -20,7 +20,7 @@ public class AuthUserEntity extends BaseEntity {
 
     private String email;
 
-    private Boolean isEnable;
+    private Boolean isEnabled;
 
     private Boolean isExpired;
 

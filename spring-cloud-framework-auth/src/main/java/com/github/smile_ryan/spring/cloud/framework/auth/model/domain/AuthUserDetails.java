@@ -2,6 +2,7 @@ package com.github.smile_ryan.spring.cloud.framework.auth.model.domain;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -23,12 +24,13 @@ public class AuthUserDetails implements UserDetails {
 
     private String email;
 
-    private Boolean isEnable;
+    private Boolean isEnabled;
 
     private Boolean isExpired;
 
     private Boolean isLocked;
 
+    @JsonIgnore
     private String password;
 
     private String gender;
@@ -43,21 +45,21 @@ public class AuthUserDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return !this.isExpired;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return this.isLocked;
+        return !this.isLocked;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return !this.isExpired;
     }
 
     @Override
     public boolean isEnabled() {
-        return this.isEnable;
+        return this.isEnabled;
     }
 }

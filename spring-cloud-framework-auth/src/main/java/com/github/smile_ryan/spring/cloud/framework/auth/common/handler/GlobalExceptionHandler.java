@@ -11,6 +11,7 @@ import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;
 import org.springframework.security.oauth2.provider.ClientRegistrationException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
@@ -77,7 +78,7 @@ public final class GlobalExceptionHandler {
         return HttpResponse.error(HttpStatus.BAD_REQUEST.value(), e.getMessage());
     }
 
-    @ExceptionHandler(value = {NotAuthException.class, AuthFailureException.class})
+    @ExceptionHandler(value = {NotAuthException.class, AuthFailureException.class, InvalidGrantException.class})
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public HttpResponse unauthorizedExceptionHandle(NotAuthException e) {
         log.warn(e.getMessage());
