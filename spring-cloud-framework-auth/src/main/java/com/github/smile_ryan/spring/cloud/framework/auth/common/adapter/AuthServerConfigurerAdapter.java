@@ -97,7 +97,7 @@ public class AuthServerConfigurerAdapter extends AuthorizationServerConfigurerAd
         endpoints.pathMapping("/oauth/authorize", "/auth/authorize");
         endpoints.pathMapping("/oauth/token", "/auth/token");
         endpoints.pathMapping("/oauth/check_token", "/auth/check_token");
-        endpoints.pathMapping("/oauth/grant", "/auth/grant");
+        endpoints.pathMapping("/oauth/confirm_access", "/auth/grant");
         endpoints.pathMapping("/oauth/error", "/auth/error");
     }
 
