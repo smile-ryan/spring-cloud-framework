@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -35,6 +37,9 @@ public class BasicAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private ClientDetailsService clientDetailsService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         if (!request.getRequestURI().equals("/auth/token") ||
@@ -44,23 +49,22 @@ public class BasicAuthenticationFilter extends OncePerRequestFilter {
         }
         String[] clientDetails = this.isHasClientDetails(request);
         if (clientDetails == null) {
-            HttpResponse bs = HttpResponse.error(HttpStatus.UNAUTHORIZED.value(), "请求中未包含客户端信息");
+            HttpResponse<String> bs = HttpResponse.error(HttpStatus.UNAUTHORIZED.value(), "请求中未包含客户端信息");
             HttpUtils.writerError(bs, response);
             return;
         }
-        this.handle(request, response, clientDetails, filterChain);
-    }
-
-    private void handle(HttpServletRequest request, HttpServletResponse response, String[] clientDetails, FilterChain filterChain) throws IOException, ServletException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.isAuthenticated()) {
             filterChain.doFilter(request, response);
             return;
         }
         AuthClientDetails details = (AuthClientDetails) this.clientDetailsService.loadClientByClientId(clientDetails[0]);
-        UsernamePasswordAuthenticationToken token =
-                new UsernamePasswordAuthenticationToken(details.getClientId(), details.getClientSecret(), details.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(token);
+        if (passwordEncoder.matches(clientDetails[1], details.getClientSecret())) {
+            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(details.getClientId(), details.getClientSecret(), details.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(token);
+        } else {
+            throw OAuth2Exception.create(OAuth2Exception.INVALID_CLIENT, "client_id与client_secret不匹配");
+        }
         filterChain.doFilter(request, response);
     }
 
