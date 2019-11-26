@@ -1,0 +1,55 @@
+server:
+  port: 8081
+#  servlet:
+#    context-path: /api/v1
+
+spring:
+  application:
+    name: spring-cloud-framework-auth
+  datasource:
+    username: root
+    password: Yto0ver5eas@2018#XATech
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.207.34:3306/test?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    type: com.alibaba.druid.pool.DruidDataSource
+  redis:
+    host: 192.168.207.34
+    password: XA&Yto0verseas
+    port: 6379
+    database: 15
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
+    timeout: 10000
+  session:
+    store-type: redis
+  thymeleaf:
+    prefix: classpath:/views/
+    suffix: .html
+    cache: false
+  mvc:
+    throw-exception-if-no-handler-found: true
+
+
+#logging.level.org.springframework.security: DEBUG
+management:
+  securit:
+    enabled: true
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*Mapper
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: uuid
+      db-type: mysql
+
+
+app:
+  auth:
+    token-store-type: redis
+    token-signing-key: Xd6U0wN/bam!

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+
+<html lang="en" class="default-style" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Authorized</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
+    <meta name="description" content="">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+
+    <link href="/static/assets/css/font.css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900" rel="stylesheet">
+
+    <!-- Icon fonts -->
+    <link rel="stylesheet" href="/static/assets/vendor/fonts/fontawesome.css">
+    <link rel="stylesheet" href="/static/assets/vendor/fonts/ionicons.css">
+    <link rel="stylesheet" href="/static/assets/vendor/fonts/linearicons.css">
+    <link rel="stylesheet" href="/static/assets/vendor/fonts/open-iconic.css">
+    <link rel="stylesheet" href="/static/assets/vendor/fonts/pe-icon-7-stroke.css">
+
+    <!-- Core stylesheets -->
+    <link rel="stylesheet" href="/static/assets/vendor/css/rtl/bootstrap.css" class="theme-settings-bootstrap-css">
+    <link rel="stylesheet" href="/static/assets/vendor/css/rtl/appwork.css" class="theme-settings-appwork-css">
+    <link rel="stylesheet" href="/static/assets/vendor/css/rtl/theme-corporate.css" class="theme-settings-theme-css">
+    <link rel="stylesheet" href="/static/assets/vendor/css/rtl/colors.css" class="theme-settings-colors-css">
+    <link rel="stylesheet" href="/static/assets/vendor/css/rtl/uikit.css">
+
+    <script src="/static/assets/vendor/js/material-ripple.js"></script>
+    <script src="/static/assets/vendor/js/layout-helpers.js"></script>
+
+    <!-- Theme settings -->
+    <!-- This file MUST be included after core stylesheets and layout-helpers.js in the <head> section -->
+
+    <!-- Core scripts -->
+    <script src="/static/assets/vendor/js/pace.js"></script>
+    <script src="/static/assets/js/jquery.min.js"></script>
+
+    <!-- Libs -->
+    <link rel="stylesheet" href="/static/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css">
+</head>
+
+<body>
+<div class="page-loader">
+    <div class="bg-primary"></div>
+</div>
+
+<!-- Layout wrapper -->
+<div class="layout-wrapper layout-2">
+    <div class="layout-inner">
+
+
+        <!-- Layout container -->
+        <div class="layout-container container">
+            <div class="title">
+                <div class="title-right">Authorized</div>
+                <div class="title-left">
+                    <a href="#">Help</a>
+                </div>
+            </div>
+            <!-- Layout content -->
+            <div class="layout-content">
+                <div>
+                    <br>
+                    <div><h3 th:text="${clientId}+' 请求授权，该应用将获取你的以下信息'"></h3></div>
+                    <div><p>昵称，头像和性别</p></div>
+                    <div><p>授权后表明你已同意 <a href="#" style="color: #E9686B">Authorized 服务协议</a></p></div>
+
+                    <form method="post" th:action="${authorize}">
+                        <input type="hidden" name="user_oauth_approval" value="true">
+                        <!--<input type="hidden" name="_csrf" th:value="${_csrf.getToken()}"/>-->
+                        <input type="hidden" name="clientId" th:value="${clientId}"/>
+
+                        <div th:each="item:${scope}">
+                            <input type="radio" th:name="'scope.'+${item}" value="true" hidden="hidden" checked="checked"/>
+                        </div>
+                        <button class="btn btn-sm" type="submit">Approve</button>
+
+                    </form>
+                </div>
+                <!-- / Content -->
+            </div>
+            <!-- Layout content -->
+
+        </div>
+        <!-- / Layout container -->
+
+    </div>
+
+    <!-- Overlay -->
+    <div class="layout-overlay layout-sidenav-toggle"></div>
+</div>
+<!-- / Layout wrapper -->
+
+<!-- Core scripts -->
+<script src="/static/assets/vendor/libs/popper/popper.js"></script>
+<script src="/static/assets/vendor/js/bootstrap.js"></script>
+<script src="/static/assets/vendor/js/sidenav.js"></script>
+
+<!-- Libs -->
+<script src="/static/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+
+<style>
+
+    html {
+        padding: 0px;
+        margin: 0px;
+    }
+
+    .title {
+        background-color: #00acfa;
+        height: 50px;
+        padding-left: 20%;
+        padding-right: 20%;
+        color: white;
+        line-height: 50px;
+        font-size: 18px;
+    }
+
+    .title-left {
+        float: right;
+    }
+
+    .title-right {
+        float: left;
+    }
+
+    .title-left a {
+        color: white;
+    }
+
+    .container {
+        clear: both;
+        text-align: center;
+    }
+
+    .btn {
+        width: 350px;
+        line-height: 35px;
+        cursor: pointer;
+        margin-top: 20px;
+        border-radius: 3px;
+        background-color: #00acfa;
+        color: white;
+        border: none;
+        font-size: 18px;
+    }
+</style>
+</body>
+
+</html>
