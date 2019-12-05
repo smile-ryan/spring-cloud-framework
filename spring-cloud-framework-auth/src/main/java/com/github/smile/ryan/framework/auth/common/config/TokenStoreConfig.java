@@ -113,11 +113,12 @@ public class TokenStoreConfig {
       if (accessToken == null || authentication == null) {
         return;
       }
-      DefaultOAuth2AccessToken oAuth2AccessToken = (DefaultOAuth2AccessToken) accessToken;
+      DefaultOAuth2AccessToken oauth2AccessToken = (DefaultOAuth2AccessToken) accessToken;
 
       int validitySeconds = getAccessTokenValiditySeconds(authentication.getOAuth2Request());
       if (validitySeconds > 0) {
-        oAuth2AccessToken.setExpiration(new Date(System.currentTimeMillis() + (validitySeconds * 1000L)));
+        oauth2AccessToken
+            .setExpiration(new Date(System.currentTimeMillis() + (validitySeconds * 1000L)));
       }
       removeAccessToken(accessToken);
       storeAccessToken(accessToken, authentication);

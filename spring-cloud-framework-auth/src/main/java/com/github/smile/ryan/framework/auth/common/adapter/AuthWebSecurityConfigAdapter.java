@@ -50,13 +50,13 @@ public class AuthWebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
 
   @Override
   public void configure(WebSecurity web) {
-    web.ignoring().antMatchers
-        ("/swagger-ui.html/**", "/webjars/**",
-            "/swagger-resources/**", "/v2/api-docs/**",
-            "/swagger-resources/configuration/ui/**",
-            "/swagger-resources/configuration/security/**",
-            "/static/**", "/images/**",
-            "/captcha", "/error", "/lock/screen");
+    web.ignoring().antMatchers(
+        "/swagger-ui.html/**", "/webjars/**",
+        "/swagger-resources/**", "/v2/api-docs/**",
+        "/swagger-resources/configuration/ui/**",
+        "/swagger-resources/configuration/security/**",
+        "/static/**", "/images/**",
+        "/captcha", "/error", "/lock/screen");
   }
 
   @Override

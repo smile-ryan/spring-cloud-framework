@@ -40,8 +40,8 @@ public final class AuthClientDetails implements ClientDetails {
 
   @Override
   public Set<String> getResourceIds() {
-    return authClientEntity.getResourceIds() != null ?
-        CommonUtils.transformStringToSet(authClientEntity.getResourceIds(), String.class) : null;
+    return authClientEntity.getResourceIds() != null
+        ? CommonUtils.transformStringToSet(authClientEntity.getResourceIds(), String.class) : null;
   }
 
   @Override
@@ -71,23 +71,23 @@ public final class AuthClientDetails implements ClientDetails {
 
   @Override
   public Set<String> getAuthorizedGrantTypes() {
-    return authClientEntity.getAuthorizedGrantTypes() != null ?
-        CommonUtils.transformStringToSet(authClientEntity.getAuthorizedGrantTypes(), String.class)
+    return authClientEntity.getAuthorizedGrantTypes() != null
+        ? CommonUtils.transformStringToSet(authClientEntity.getAuthorizedGrantTypes(), String.class)
         : null;
   }
 
   @Override
   public Set<String> getRegisteredRedirectUri() {
-    return authClientEntity.getRegisteredRedirectUri() != null ?
-        CommonUtils.transformStringToSet(authClientEntity.getRegisteredRedirectUri(), String.class)
-        : null;
+    return authClientEntity.getRegisteredRedirectUri() != null
+        ? CommonUtils
+        .transformStringToSet(authClientEntity.getRegisteredRedirectUri(), String.class) : null;
   }
 
   @Override
   public Collection<GrantedAuthority> getAuthorities() {
     return (authClientEntity.getAuthorities() != null
-        && authClientEntity.getAuthorities().trim().length() > 0) ?
-        AuthorityUtils.commaSeparatedStringToAuthorityList(authClientEntity.getAuthorities())
+        && authClientEntity.getAuthorities().trim().length() > 0)
+        ? AuthorityUtils.commaSeparatedStringToAuthorityList(authClientEntity.getAuthorities())
         : null;
   }
 
