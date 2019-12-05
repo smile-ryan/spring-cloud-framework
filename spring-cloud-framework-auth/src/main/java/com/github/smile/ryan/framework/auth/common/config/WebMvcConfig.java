@@ -53,7 +53,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         .globalOperationParameters(parameters)
         .select()
         .apis(RequestHandlerSelectors
-            .basePackage("com.github.smile_ryan.spring.cloud.framework.auth.controller"))
+            .basePackage("com.github.smile.ryan.framework.auth.controller"))
         .paths(PathSelectors.any())
         .build();
   }

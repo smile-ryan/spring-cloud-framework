@@ -76,8 +76,7 @@ public class AuthWebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
         .permitAll()
         .anyRequest()
         .authenticated()
-        .and()
-        .sessionManagement().maximumSessions(1).expiredUrl("/lock/screen");
+        .and();
 
     http.formLogin()
         .failureHandler(loginFailureHandler)
