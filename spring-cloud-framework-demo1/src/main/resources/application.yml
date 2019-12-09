@@ -1,0 +1,65 @@
+server:
+  port: 8082
+#  servlet:
+#    context-path: /api/v1
+
+spring:
+  application:
+    name: spring-cloud-framework-auth
+  datasource:
+    username: root
+    password: Yto0ver5eas@2018#XATech
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.207.34:3306/test?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    type: com.alibaba.druid.pool.DruidDataSource
+  redis:
+    host: 192.168.207.34
+    password: XA&Yto0verseas
+    port: 6379
+    database: 15
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
+    timeout: 10000
+  session:
+    store-type: redis
+  thymeleaf:
+    prefix: classpath:/views/
+    suffix: .html
+    cache: false
+  mvc:
+    throw-exception-if-no-handler-found: true
+
+
+
+#logging.level.org.springframework.security: DEBUG
+management:
+  securit:
+    enabled: true
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*Mapper
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: uuid
+      db-type: mysql
+
+
+security:
+  oauth2:
+    client:
+      client-id: client
+      client-secret: 123456
+      scope: all
+      authorized-grant-types: authorization_code
+      access-token-uri: http://localhost:8081/auth/token
+      user-authorization-uri: http://localhost:8081/auth/authorize
+      pre-established-redirect-uri: http://localhost:8082/auth/code
+      use-current-uri: false
+    resource:
+      user-info-uri: http://localhost:8081/user

@@ -19,6 +19,7 @@
 
   <modules>
     <module>spring-cloud-framework-auth</module>
+    <module>spring-cloud-framework-demo1</module>
   </modules>
 
   <properties>

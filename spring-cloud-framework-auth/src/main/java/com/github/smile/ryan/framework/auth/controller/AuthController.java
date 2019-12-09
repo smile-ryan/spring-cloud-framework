@@ -1,7 +1,10 @@
 package com.github.smile.ryan.framework.auth.controller;
 
+import com.github.smile.ryan.framework.auth.model.response.HttpResponse;
 import java.security.Principal;
+import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,5 +38,14 @@ public class AuthController {
   public ResponseEntity revokeToken(String access_token) {
     boolean result = consumerTokenServices.revokeToken(access_token);
     return ResponseEntity.status(HttpStatus.OK).body(result);
+  }
+
+  @GetMapping("/hasPermission")
+  public HttpResponse<Boolean> hasPermission(HttpServletRequest request) {
+    if (StringUtils
+        .equalsIgnoreCase(request.getHeader("X-Strict-Strategy"), Boolean.toString(true))) {
+      return HttpResponse.error(404, "资源不存在");
+    }
+    return HttpResponse.ok(true);
   }
 }

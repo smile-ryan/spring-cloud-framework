@@ -1,0 +1,1 @@
+set CONSOLE_MAIN=com.github.smile_ryan.framework.demo1.Demo1Application

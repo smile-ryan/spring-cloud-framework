@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -26,8 +27,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  * @author <a href="mailto:smile.ryan@outlook.com">Ryan Chen</a>
  * @since v1.0.0
  */
-@Configuration
 @Order(1)
+@Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class AuthWebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
 
   private AuthUserDetailService authUserDetailService;
@@ -87,7 +89,6 @@ public class AuthWebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
 
     http.httpBasic().disable();
 
-    // 用户密码验证之前校验验证码
     http.addFilterBefore(captchaRequestFilter, UsernamePasswordAuthenticationFilter.class);
   }
 

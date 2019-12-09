@@ -61,12 +61,9 @@ public final class AuthClientDetails implements ClientDetails {
 
   @Override
   public Set<String> getScope() {
-
     this.scope = authClientEntity.getScope() != null
         ? CommonUtils.transformStringToSet(authClientEntity.getScope(), String.class) : null;
-
-    return authClientEntity.getScope() != null
-        ? CommonUtils.transformStringToSet(authClientEntity.getScope(), String.class) : null;
+    return this.scope;
   }
 
   @Override

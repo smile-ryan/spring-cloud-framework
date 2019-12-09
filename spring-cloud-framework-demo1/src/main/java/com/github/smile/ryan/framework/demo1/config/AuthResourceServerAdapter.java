@@ -1,0 +1,85 @@
+package com.github.smile.ryan.framework.demo1.config;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.ImmutableList;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
+import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
+import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.AccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
+import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
+import org.springframework.web.client.RestTemplate;
+
+/**
+ * <pre>
+ * 名称：OAuth2ResourceServerConfig
+ * 描述：OAuth2ResourceServerConfig.java
+ * </pre>
+ *
+ * @author <a href="mailto:smile.ryan@outlook.com">Ryan Chen</a>
+ * @since v1.0.0
+ */
+@Configuration
+@EnableResourceServer
+public class AuthResourceServerAdapter extends ResourceServerConfigurerAdapter {
+
+  @Autowired
+  private ObjectMapper objectMapper;
+
+  @Override
+  public void configure(ResourceServerSecurityConfigurer resources) {
+    resources.tokenServices(tokenServices());
+  }
+
+  @Bean
+  public ResourceServerTokenServices tokenServices() {
+    RemoteTokenServices remoteTokenServices = new RemoteTokenServices();
+    remoteTokenServices.setCheckTokenEndpointUrl("http://localhost:8081/auth/check_token");
+    remoteTokenServices.setClientId("client");
+    remoteTokenServices.setClientSecret("123456");
+    remoteTokenServices.setRestTemplate(restTemplate());
+    remoteTokenServices.setAccessTokenConverter(accessTokenConverter());
+    return remoteTokenServices;
+  }
+
+
+  @LoadBalanced
+  @Bean
+  public RestTemplate restTemplate() {
+    //httpRequestFactory()
+    RestTemplate restTemplate = new RestTemplate();
+    List<HttpMessageConverter<?>> converters = restTemplate.getMessageConverters();
+    for (HttpMessageConverter<?> converter : converters) {
+      if (converter instanceof MappingJackson2HttpMessageConverter) {
+        MappingJackson2HttpMessageConverter jsonConverter = (MappingJackson2HttpMessageConverter) converter;
+        jsonConverter.setObjectMapper(objectMapper);
+        jsonConverter.setSupportedMediaTypes(ImmutableList
+            .of(new MediaType("application", "json",
+                    MappingJackson2HttpMessageConverter.DEFAULT_CHARSET),
+                new MediaType("text", "javascript",
+                    MappingJackson2HttpMessageConverter.DEFAULT_CHARSET)));
+      }
+      if (converter instanceof MappingJackson2XmlHttpMessageConverter) {
+        MappingJackson2XmlHttpMessageConverter xmlConverter = (MappingJackson2XmlHttpMessageConverter) converter;
+        xmlConverter.setObjectMapper(objectMapper);
+      }
+    }
+    return restTemplate;
+  }
+
+  @Bean
+  public AccessTokenConverter accessTokenConverter() {
+    return new DefaultAccessTokenConverter();
+  }
+
+}

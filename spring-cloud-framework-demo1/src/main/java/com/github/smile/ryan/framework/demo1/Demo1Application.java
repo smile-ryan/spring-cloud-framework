@@ -1,10 +1,8 @@
-package com.github.smile.ryan.framework.auth;
+package com.github.smile.ryan.framework.demo1;
 
-import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 /**
  * <pre>
@@ -15,14 +13,12 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
  * @author <a href="mailto:smile.ryan@outlook.com">Ryan Chen</a>
  * @since v1.0.0
  */
-@Slf4j
 @SpringBootApplication
-@MapperScan("com.github.smile.ryan.framework.auth.mapper")
-@EnableRedisHttpSession(redisNamespace = "auth", maxInactiveIntervalInSeconds = 300)
-public class AuthApplication {
+@MapperScan("com.github.smile.ryan.framework.demo1.mapper")
+public class Demo1Application {
 
   public static void main(String[] args) {
-    SpringApplication.run(AuthApplication.class, args);
+    SpringApplication.run(Demo1Application.class, args);
   }
 
 }
