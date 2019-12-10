@@ -38,8 +38,12 @@ public final class AuthUserDetailService implements UserDetailsService {
     AuthUserDetails authUserDetails = new AuthUserDetails();
     BeanUtils.copyProperties(authUserEntity, authUserDetails);
     GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_USER");
+    GrantedAuthority authority2 = new SimpleGrantedAuthority("ROLE_USER2");
+    GrantedAuthority authority3 = new SimpleGrantedAuthority("auth-service:basic-manager:read-only");
     List<GrantedAuthority> authorities = new ArrayList<>();
     authorities.add(authority);
+    authorities.add(authority2);
+    authorities.add(authority3);
     authUserDetails.setAuthorities(authorities);
     return authUserDetails;
   }

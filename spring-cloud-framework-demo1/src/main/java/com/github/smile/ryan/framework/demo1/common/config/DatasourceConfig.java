@@ -1,4 +1,4 @@
-package com.github.smile.ryan.framework.demo1.config;
+package com.github.smile.ryan.framework.demo1.common.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import javax.sql.DataSource;

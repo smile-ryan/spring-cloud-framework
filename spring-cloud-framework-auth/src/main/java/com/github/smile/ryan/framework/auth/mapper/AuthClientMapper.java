@@ -18,7 +18,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AuthClientMapper extends BaseMapper<AuthClientEntity> {
 
-  @Select("select * from auth_client where client_id=#{id}")
-  AuthClientEntity findClientByClientId(@Param("id") String clientId);
+  @Select("select * from auth_client where client_id=#{clientId}")
+  AuthClientEntity findClientByClientId(@Param("clientId") String clientId);
 
 }

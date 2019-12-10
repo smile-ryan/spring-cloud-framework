@@ -16,6 +16,7 @@ import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.OAuth2Request;
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
@@ -87,6 +88,13 @@ public class TokenStoreConfig {
     return converter;
   }
 
+  @Bean
+  public DefaultTokenServices defaultTokenServices() {
+    DefaultTokenServices tokenServices = new DefaultTokenServices();
+    tokenServices.setTokenStore(tokenStore());
+    return tokenServices;
+  }
+
 
   private final class AuthRedisTokenStore extends RedisTokenStore {
 
@@ -108,8 +116,7 @@ public class TokenStoreConfig {
       return accessToken;
     }
 
-    private void resetAccessTokenValiditySeconds(OAuth2AccessToken accessToken,
-        OAuth2Authentication authentication) {
+    private void resetAccessTokenValiditySeconds(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
       if (accessToken == null || authentication == null) {
         return;
       }

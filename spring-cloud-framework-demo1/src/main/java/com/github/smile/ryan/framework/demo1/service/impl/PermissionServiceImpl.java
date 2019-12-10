@@ -21,8 +21,7 @@ public class PermissionServiceImpl implements PermissionService {
   public Boolean hasPermission(HttpServletRequest request) {
     String authorization = request.getHeader("Authorization");
     String strictStrategy = request.getHeader("X-Strict-Strategy");
-    boolean hasPermission = !StringUtils
-        .equalsIgnoreCase(request.getHeader("X-Strict-Strategy"), Boolean.toString(true));
+    boolean hasPermission = !StringUtils.equalsIgnoreCase(request.getHeader("X-Strict-Strategy"), Boolean.toString(true));
 
     System.out.println("------------------" + authorization);
     System.out.println("------------------" + strictStrategy);

@@ -1,4 +1,4 @@
-package com.github.smile.ryan.framework.demo1.config;
+package com.github.smile.ryan.framework.demo1.common.config;
 
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Configuration;

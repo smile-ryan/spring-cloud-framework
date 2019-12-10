@@ -27,11 +27,26 @@ public class SecurityController {
     return "hello, this is demo1-test2";
   }
 
-  @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+  @PreAuthorize("hasRole('USER2')")
   @GetMapping("/test3")
   public String test3() {
     return "hello, this is demo1-test3";
   }
+
+  @PreAuthorize("hasAnyAuthority('auth-service:basic-manager:read-only')")
+  @GetMapping("/test4")
+  public String test4() {
+    return "hello, this is demo1-test4";
+  }
+
+  @PreAuthorize("hasAnyAuthority('auth-service:basic-manager:user-manager:user-update:execute')")
+  @GetMapping("/test5")
+  public String test5() {
+    return "hello, this is demo1-test5";
+  }
+
+
+
 
   @GetMapping("/auth/code")
   public String code(String code) {

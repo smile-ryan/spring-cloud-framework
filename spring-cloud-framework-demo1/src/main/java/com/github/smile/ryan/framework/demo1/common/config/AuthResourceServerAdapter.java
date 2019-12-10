@@ -1,4 +1,4 @@
-package com.github.smile.ryan.framework.demo1.config;
+package com.github.smile.ryan.framework.demo1.common.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableList;
@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
@@ -38,7 +37,9 @@ public class AuthResourceServerAdapter extends ResourceServerConfigurerAdapter {
 
   @Override
   public void configure(ResourceServerSecurityConfigurer resources) {
-    resources.tokenServices(tokenServices());
+    resources
+        .resourceId("demo1-service")
+        .tokenServices(tokenServices());
   }
 
   @Bean
@@ -56,7 +57,6 @@ public class AuthResourceServerAdapter extends ResourceServerConfigurerAdapter {
   @LoadBalanced
   @Bean
   public RestTemplate restTemplate() {
-    //httpRequestFactory()
     RestTemplate restTemplate = new RestTemplate();
     List<HttpMessageConverter<?>> converters = restTemplate.getMessageConverters();
     for (HttpMessageConverter<?> converter : converters) {
@@ -64,14 +64,8 @@ public class AuthResourceServerAdapter extends ResourceServerConfigurerAdapter {
         MappingJackson2HttpMessageConverter jsonConverter = (MappingJackson2HttpMessageConverter) converter;
         jsonConverter.setObjectMapper(objectMapper);
         jsonConverter.setSupportedMediaTypes(ImmutableList
-            .of(new MediaType("application", "json",
-                    MappingJackson2HttpMessageConverter.DEFAULT_CHARSET),
-                new MediaType("text", "javascript",
-                    MappingJackson2HttpMessageConverter.DEFAULT_CHARSET)));
-      }
-      if (converter instanceof MappingJackson2XmlHttpMessageConverter) {
-        MappingJackson2XmlHttpMessageConverter xmlConverter = (MappingJackson2XmlHttpMessageConverter) converter;
-        xmlConverter.setObjectMapper(objectMapper);
+            .of(new MediaType("application", "json", MappingJackson2HttpMessageConverter.DEFAULT_CHARSET),
+                new MediaType("text", "html", MappingJackson2HttpMessageConverter.DEFAULT_CHARSET)));
       }
     }
     return restTemplate;
@@ -81,5 +75,6 @@ public class AuthResourceServerAdapter extends ResourceServerConfigurerAdapter {
   public AccessTokenConverter accessTokenConverter() {
     return new DefaultAccessTokenConverter();
   }
+
 
 }

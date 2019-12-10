@@ -16,8 +16,7 @@ import org.springframework.stereotype.Service;
  * @since v1.0.0
  */
 @Service
-public class AuthUserServiceImpl extends ServiceImpl<AuthUserMapper, AuthUserEntity> implements
-    AuthUserService {
+public class AuthUserServiceImpl extends ServiceImpl<AuthUserMapper, AuthUserEntity> implements AuthUserService {
 
   @Override
   public AuthUserEntity findByUserName(String userName) {

@@ -21,17 +21,18 @@ public class JacksonTest {
 
   public static void main(String[] args) throws IOException {
     ObjectMapper objectMapper = new XmlMapper();
-
-    Map<String, Set<String>> map = new HashMap<>();
+    Map<String, Object> map = new HashMap<>();
     Set<String> sets = new HashSet<>();
     sets.add("1");
     sets.add("21");
-
-//    map.put("name", "zhangsan");
+    map.put("name", "zhangsan");
     map.put("values", sets);
-
-    System.out.println(objectMapper.writeValueAsString(map));
-
+    String x = objectMapper.writeValueAsString(map);
+    System.out.println(x);
+    System.out.println(objectMapper.writeValueAsString(sets));
+    String y = "<HashMap><HashSet><item>1</item><item>21</item></HashSet></HashMap>";
+    System.out.println(objectMapper.readValue(x, Map.class));
+    System.out.println(objectMapper.readValue(y, Map.class));
   }
 
 }

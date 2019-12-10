@@ -39,7 +39,7 @@ public class AuthResourceServerAdapter extends ResourceServerConfigurerAdapter {
   @Override
   public void configure(ResourceServerSecurityConfigurer resources) {
     resources.tokenStore(tokenStore)
-        .resourceId("auth-server");
+        .resourceId("auth-service");
     resources.authenticationEntryPoint(authenticationEntryPoint)
         .accessDeniedHandler(forbiddenExceptionHandler);
 
