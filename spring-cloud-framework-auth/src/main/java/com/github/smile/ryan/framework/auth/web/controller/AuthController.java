@@ -1,4 +1,4 @@
-package com.github.smile.ryan.framework.auth.controller;
+package com.github.smile.ryan.framework.auth.web.controller;
 
 import com.github.smile.ryan.framework.auth.model.response.HttpResponse;
 import java.security.Principal;

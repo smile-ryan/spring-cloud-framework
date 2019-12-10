@@ -1,4 +1,4 @@
-package com.github.smile.ryan.framework.auth.controller;
+package com.github.smile.ryan.framework.auth.web.controller;
 
 import com.github.smile.ryan.framework.auth.common.properties.AuthSecurityProperties;
 import com.github.smile.ryan.framework.auth.common.util.CaptchaGenerator;
