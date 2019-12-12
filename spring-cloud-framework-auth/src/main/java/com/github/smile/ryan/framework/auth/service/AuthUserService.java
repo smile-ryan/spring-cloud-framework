@@ -1,6 +1,5 @@
 package com.github.smile.ryan.framework.auth.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.smile.ryan.framework.auth.model.entity.AuthUserEntity;
 
 /**
@@ -12,7 +11,7 @@ import com.github.smile.ryan.framework.auth.model.entity.AuthUserEntity;
  * @author <a href="mailto:smile.ryan@outlook.com">Ryan Chen</a>
  * @since v1.0.0
  */
-public interface AuthUserService extends IService<AuthUserEntity> {
+public interface AuthUserService {
 
     AuthUserEntity findByUserName(String userName);
 

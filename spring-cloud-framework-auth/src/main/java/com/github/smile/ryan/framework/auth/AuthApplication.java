@@ -17,7 +17,7 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
  */
 @Slf4j
 @SpringBootApplication
-@MapperScan("com.github.smile.ryan.framework.auth.mapper")
+@MapperScan("com.github.smile.ryan.framework.auth.repository")
 @EnableRedisHttpSession(redisNamespace = "auth", maxInactiveIntervalInSeconds = 300)
 public class AuthApplication {
 

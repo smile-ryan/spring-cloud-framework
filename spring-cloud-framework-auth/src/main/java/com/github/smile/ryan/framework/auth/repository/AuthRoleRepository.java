@@ -1,6 +1,5 @@
-package com.github.smile.ryan.framework.auth.mapper;
+package com.github.smile.ryan.framework.auth.repository;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.github.smile.ryan.framework.auth.model.entity.AuthRoleEntity;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
@@ -9,15 +8,15 @@ import org.springframework.stereotype.Repository;
 
 /**
  * <pre>
- * 名称：AuthRoleMapper
- * 描述：AuthRoleMapper.java
+ * 名称：AuthRoleRepository
+ * 描述：AuthRoleRepository.java
  * </pre>
  *
  * @author <a href="mailto:smile.ryan@outlook.com">Ryan Chen</a>
  * @since v1.0.0
  */
 @Repository
-public interface AuthRoleMapper extends BaseMapper<AuthRoleEntity> {
+public interface AuthRoleRepository {
 
     @Select("select r.* "
         + "from auth_user u "

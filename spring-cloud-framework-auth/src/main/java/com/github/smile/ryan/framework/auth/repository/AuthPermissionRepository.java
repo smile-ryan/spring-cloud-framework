@@ -1,6 +1,5 @@
-package com.github.smile.ryan.framework.auth.mapper;
+package com.github.smile.ryan.framework.auth.repository;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.github.smile.ryan.framework.auth.model.entity.AuthPermissionEntity;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
@@ -9,15 +8,15 @@ import org.springframework.stereotype.Repository;
 
 /**
  * <pre>
- * 名称：AuthPermissionMapper
- * 描述：AuthPermissionMapper.java
+ * 名称：AuthPermissionRepository
+ * 描述：AuthPermissionRepository.java
  * </pre>
  *
  * @author <a href="mailto:smile.ryan@outlook.com">Ryan Chen</a>
  * @since v1.0.0
  */
 @Repository
-public interface AuthPermissionMapper extends BaseMapper<AuthPermissionEntity> {
+public interface AuthPermissionRepository {
 
     @Select("select p.* "
         + "from auth_user u "

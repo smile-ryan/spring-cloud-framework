@@ -1,10 +1,10 @@
 package com.github.smile.ryan.framework.auth.service.impl;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.smile.ryan.framework.auth.mapper.AuthRoleMapper;
 import com.github.smile.ryan.framework.auth.model.entity.AuthRoleEntity;
+import com.github.smile.ryan.framework.auth.repository.AuthRoleRepository;
 import com.github.smile.ryan.framework.auth.service.AuthRoleService;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,10 +17,13 @@ import org.springframework.stereotype.Service;
  * @since v1.0.0
  */
 @Service
-public class AuthRoleServiceImpl extends ServiceImpl<AuthRoleMapper, AuthRoleEntity> implements AuthRoleService {
+public class AuthRoleServiceImpl implements AuthRoleService {
+
+    @Autowired
+    private AuthRoleRepository authRoleRepository;
 
     @Override
     public List<AuthRoleEntity> findAllByUserId(Long userId) {
-        return this.baseMapper.findAllByUserId(userId);
+        return authRoleRepository.findAllByUserId(userId);
     }
 }

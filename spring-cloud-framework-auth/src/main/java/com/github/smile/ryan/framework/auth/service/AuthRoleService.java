@@ -1,6 +1,5 @@
 package com.github.smile.ryan.framework.auth.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.smile.ryan.framework.auth.model.entity.AuthRoleEntity;
 import java.util.List;
 
@@ -13,7 +12,7 @@ import java.util.List;
  * @author <a href="mailto:smile.ryan@outlook.com">Ryan Chen</a>
  * @since v1.0.0
  */
-public interface AuthRoleService extends IService<AuthRoleEntity> {
+public interface AuthRoleService {
 
     List<AuthRoleEntity> findAllByUserId(Long userId);
 

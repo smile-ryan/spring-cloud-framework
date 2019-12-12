@@ -1,6 +1,5 @@
 package com.github.smile.ryan.framework.auth.model.domain;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import java.util.List;
 import lombok.Data;
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -34,7 +33,8 @@ public class AuthUserDetails implements UserDetails {
 
     private String gender;
 
-    @TableField(exist = false)
+    private Long parentId;
+
     private List<GrantedAuthority> authorities;
 
     @Override

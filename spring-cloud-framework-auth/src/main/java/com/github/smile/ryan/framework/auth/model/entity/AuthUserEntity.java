@@ -1,6 +1,5 @@
 package com.github.smile.ryan.framework.auth.model.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -15,7 +14,6 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("auth_user")
 public class AuthUserEntity extends BaseEntity {
 
     private String username;
@@ -33,5 +31,7 @@ public class AuthUserEntity extends BaseEntity {
     private String gender;
 
     private Long orgId;
+
+    private Long parentId;
 
 }

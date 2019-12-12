@@ -1,6 +1,5 @@
 package com.github.smile.ryan.framework.auth.model.entity;
 
-import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import java.util.Date;
 import javax.validation.constraints.NotNull;
@@ -22,7 +21,6 @@ public class BaseEntity implements Serializable {
      * ID
      */
     @NotNull
-    @TableId
     private Long id;
 
     /**
@@ -48,6 +46,6 @@ public class BaseEntity implements Serializable {
     /**
      * 是否删除
      */
-    private Integer isDeleted;
+    private Boolean deleted;
 
 }

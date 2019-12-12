@@ -1,6 +1,5 @@
 package com.github.smile.ryan.framework.auth.model.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,7 +15,6 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("auth_client")
 public class AuthClientEntity extends BaseEntity {
 
     @NotNull

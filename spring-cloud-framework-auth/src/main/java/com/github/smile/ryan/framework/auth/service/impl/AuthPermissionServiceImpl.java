@@ -1,10 +1,10 @@
 package com.github.smile.ryan.framework.auth.service.impl;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.smile.ryan.framework.auth.mapper.AuthPermissionMapper;
 import com.github.smile.ryan.framework.auth.model.entity.AuthPermissionEntity;
+import com.github.smile.ryan.framework.auth.repository.AuthPermissionRepository;
 import com.github.smile.ryan.framework.auth.service.AuthPermissionService;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,15 +17,18 @@ import org.springframework.stereotype.Service;
  * @since v1.0.0
  */
 @Service
-public class AuthPermissionServiceImpl extends ServiceImpl<AuthPermissionMapper, AuthPermissionEntity> implements AuthPermissionService {
+public class AuthPermissionServiceImpl implements AuthPermissionService {
+
+    @Autowired
+    private AuthPermissionRepository authPermissionRepository;
 
     @Override
     public List<AuthPermissionEntity> findAllByUserId(Long userId) {
-        return this.baseMapper.findAllByUserId(userId);
+        return authPermissionRepository.findAllByUserId(userId);
     }
 
     @Override
     public List<AuthPermissionEntity> findAllByRoleId(Long roleId) {
-        return this.baseMapper.findAllByRoleId(roleId);
+        return authPermissionRepository.findAllByRoleId(roleId);
     }
 }

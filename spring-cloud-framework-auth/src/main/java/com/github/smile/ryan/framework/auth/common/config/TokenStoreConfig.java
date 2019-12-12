@@ -2,6 +2,7 @@ package com.github.smile.ryan.framework.auth.common.config;
 
 import com.github.smile.ryan.framework.auth.common.exception.AuthException;
 import com.github.smile.ryan.framework.auth.common.properties.AuthSecurityProperties;
+import com.github.smile.ryan.framework.auth.common.service.AuthTokenService;
 import java.util.Date;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.BeanCreationException;
@@ -16,7 +17,6 @@ import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.OAuth2Request;
-import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
@@ -90,8 +90,8 @@ public class TokenStoreConfig {
     }
 
     @Bean
-    public DefaultTokenServices defaultTokenServices() {
-        DefaultTokenServices tokenServices = new DefaultTokenServices();
+    public AuthTokenService authTokenServices() {
+        AuthTokenService tokenServices = new AuthTokenService();
         tokenServices.setTokenStore(tokenStore());
         return tokenServices;
     }

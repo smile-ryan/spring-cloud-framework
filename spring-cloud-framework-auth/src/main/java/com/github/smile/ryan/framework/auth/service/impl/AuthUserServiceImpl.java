@@ -1,9 +1,9 @@
 package com.github.smile.ryan.framework.auth.service.impl;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.smile.ryan.framework.auth.mapper.AuthUserMapper;
 import com.github.smile.ryan.framework.auth.model.entity.AuthUserEntity;
+import com.github.smile.ryan.framework.auth.repository.AuthUserRepository;
 import com.github.smile.ryan.framework.auth.service.AuthUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,11 +16,14 @@ import org.springframework.stereotype.Service;
  * @since v1.0.0
  */
 @Service
-public class AuthUserServiceImpl extends ServiceImpl<AuthUserMapper, AuthUserEntity> implements AuthUserService {
+public class AuthUserServiceImpl implements AuthUserService {
+
+    @Autowired
+    private AuthUserRepository authUserRepository;
 
     @Override
     public AuthUserEntity findByUserName(String userName) {
-        return this.baseMapper.findByUserName(userName);
+        return authUserRepository.findByUserName(userName);
     }
 
 

@@ -55,7 +55,7 @@ security:
     client:
       client-id: client
       client-secret: 123456
-      scope: all
+      scope: user-info user-detail
       authorized-grant-types: authorization_code
       access-token-uri: http://localhost:8081/auth/token
       user-authorization-uri: http://localhost:8081/auth/authorize

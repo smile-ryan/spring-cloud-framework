@@ -1,6 +1,5 @@
 package com.github.smile.ryan.framework.auth.model.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -15,7 +14,6 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("auth_role_permission")
 public class AuthRolePermissionEntity extends BaseEntity {
 
     private Long roleId;
