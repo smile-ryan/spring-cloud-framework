@@ -26,40 +26,40 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 @Data
 public class DatasourceConfig {
 
-  private String username;
-  private String url;
-  private String password;
-  private String driverClassName;
+    private String username;
+    private String url;
+    private String password;
+    private String driverClassName;
 
-  @Bean
-  @Primary
-  public DataSource dataSource() {
-    log.info(this.url + ":" + this.username);
-    DruidDataSource ds = new DruidDataSource();
-    ds.setUsername(this.username);
-    ds.setPassword(this.password);
-    ds.setDriverClassName(this.driverClassName);
-    ds.setUrl(this.url);
-    // TODO 参数优化
-    ds.setInitialSize(10);
-    ds.setMinIdle(30);
-    ds.setMaxActive(300);
-    ds.setMaxWait(3600000);
-    ds.setTimeBetweenEvictionRunsMillis(60000);
-    ds.setMinEvictableIdleTimeMillis(30000);
-    ds.setValidationQuery("select 1 from dual");
-    ds.setTestWhileIdle(true);
-    ds.setTestOnBorrow(false);
-    ds.setTestOnReturn(false);
-    ds.setPoolPreparedStatements(true);
-    ds.setMaxPoolPreparedStatementPerConnectionSize(20);
+    @Bean
+    @Primary
+    public DataSource dataSource() {
+        log.info(this.url + ":" + this.username);
+        DruidDataSource ds = new DruidDataSource();
+        ds.setUsername(this.username);
+        ds.setPassword(this.password);
+        ds.setDriverClassName(this.driverClassName);
+        ds.setUrl(this.url);
+        // TODO 参数优化
+        ds.setInitialSize(10);
+        ds.setMinIdle(30);
+        ds.setMaxActive(300);
+        ds.setMaxWait(3600000);
+        ds.setTimeBetweenEvictionRunsMillis(60000);
+        ds.setMinEvictableIdleTimeMillis(30000);
+        ds.setValidationQuery("select 1 from dual");
+        ds.setTestWhileIdle(true);
+        ds.setTestOnBorrow(false);
+        ds.setTestOnReturn(false);
+        ds.setPoolPreparedStatements(true);
+        ds.setMaxPoolPreparedStatementPerConnectionSize(20);
 
-    return ds;
-  }
+        return ds;
+    }
 
-  @Bean
-  public DataSourceTransactionManager transactionManager() {
-    return new DataSourceTransactionManager(dataSource());
-  }
+    @Bean
+    public DataSourceTransactionManager transactionManager() {
+        return new DataSourceTransactionManager(dataSource());
+    }
 
 }

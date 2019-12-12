@@ -14,6 +14,6 @@ import org.springframework.web.context.request.ServletWebRequest;
  */
 public interface SmsCaptchaService {
 
-  SmsCaptcha generator(ServletWebRequest request);
+    SmsCaptcha generator(ServletWebRequest request);
 
 }

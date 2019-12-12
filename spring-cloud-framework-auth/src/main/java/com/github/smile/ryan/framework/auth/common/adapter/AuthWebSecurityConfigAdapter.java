@@ -32,76 +32,76 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class AuthWebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
 
-  private AuthUserDetailService authUserDetailService;
+    private AuthUserDetailService authUserDetailService;
 
-  private AuthSecurityProperties properties;
+    private AuthSecurityProperties properties;
 
-  private LoginFailureHandler loginFailureHandler;
+    private LoginFailureHandler loginFailureHandler;
 
-  private CaptchaRequestFilter captchaRequestFilter;
+    private CaptchaRequestFilter captchaRequestFilter;
 
-  @Autowired
-  public AuthWebSecurityConfigAdapter(AuthUserDetailService authUserDetailService,
-      AuthSecurityProperties properties, LoginFailureHandler loginFailureHandler,
-      CaptchaRequestFilter captchaRequestFilter) {
-    this.authUserDetailService = authUserDetailService;
-    this.properties = properties;
-    this.loginFailureHandler = loginFailureHandler;
-    this.captchaRequestFilter = captchaRequestFilter;
-  }
+    @Autowired
+    public AuthWebSecurityConfigAdapter(AuthUserDetailService authUserDetailService,
+        AuthSecurityProperties properties, LoginFailureHandler loginFailureHandler,
+        CaptchaRequestFilter captchaRequestFilter) {
+        this.authUserDetailService = authUserDetailService;
+        this.properties = properties;
+        this.loginFailureHandler = loginFailureHandler;
+        this.captchaRequestFilter = captchaRequestFilter;
+    }
 
-  @Override
-  public void configure(WebSecurity web) {
-    web.ignoring().antMatchers(
-        "/swagger-ui.html/**", "/webjars/**",
-        "/swagger-resources/**", "/v2/api-docs/**",
-        "/swagger-resources/configuration/ui/**",
-        "/swagger-resources/configuration/security/**",
-        "/static/**", "/images/**",
-        "/captcha", "/error", "/lock/screen");
-  }
+    @Override
+    public void configure(WebSecurity web) {
+        web.ignoring().antMatchers(
+            "/swagger-ui.html/**", "/webjars/**",
+            "/swagger-resources/**", "/v2/api-docs/**",
+            "/swagger-resources/configuration/ui/**",
+            "/swagger-resources/configuration/security/**",
+            "/static/**", "/images/**",
+            "/captcha", "/error", "/timeout");
+    }
 
-  @Override
-  public void configure(AuthenticationManagerBuilder auth) throws Exception {
-    auth.userDetailsService(authUserDetailService);
-  }
+    @Override
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(authUserDetailService);
+    }
 
-  @Override
-  protected void configure(HttpSecurity http) throws Exception {
-    http
-        .requestMatchers()
-        .antMatchers("/auth/**", "/index", "/", properties.getLoginPage(),
-            properties.getLoginProcessUrl())
-        .and()
-        .authorizeRequests()
-        .antMatchers(properties.getLoginPage(), properties.getLoginProcessUrl())
-        .permitAll()
-        .anyRequest()
-        .authenticated()
-        .and();
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+            .requestMatchers()
+            .antMatchers("/auth/**", "/index", "/", properties.getLoginPage(),
+                properties.getLoginProcessUrl())
+            .and()
+            .authorizeRequests()
+            .antMatchers(properties.getLoginPage(), properties.getLoginProcessUrl())
+            .permitAll()
+            .anyRequest()
+            .authenticated()
+            .and();
 
-    http.formLogin()
-        .failureHandler(loginFailureHandler)
-        .loginPage(properties.getLoginPage())
-        .loginProcessingUrl(properties.getLoginProcessUrl())
-        .failureUrl("/error")
-        .defaultSuccessUrl("/index");
+        http.formLogin()
+            .failureHandler(loginFailureHandler)
+            .loginPage(properties.getLoginPage())
+            .loginProcessingUrl(properties.getLoginProcessUrl())
+            .failureUrl("/error")
+            .defaultSuccessUrl("http://localhost:8082/test");
 
-    http.httpBasic().disable();
+        http.httpBasic().disable();
 
-    http.addFilterBefore(captchaRequestFilter, UsernamePasswordAuthenticationFilter.class);
-  }
+        http.addFilterBefore(captchaRequestFilter, UsernamePasswordAuthenticationFilter.class);
+    }
 
 
-  @Override
-  @Bean
-  public AuthenticationManager authenticationManagerBean() throws Exception {
-    return super.authenticationManagerBean();
-  }
+    @Override
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
 
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
-  }
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
 }

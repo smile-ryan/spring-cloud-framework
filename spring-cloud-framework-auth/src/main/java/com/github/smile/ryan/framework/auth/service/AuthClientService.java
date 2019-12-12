@@ -15,6 +15,6 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface AuthClientService extends IService<AuthClientEntity> {
 
-  AuthClientEntity findClientByClientId(@Param("clientId") String clientId);
+    AuthClientEntity findClientByClientId(@Param("clientId") String clientId);
 
 }

@@ -3,6 +3,7 @@ package com.github.smile.ryan.framework.auth.model.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * <pre>
@@ -14,37 +15,40 @@ import lombok.Data;
  * @since v1.0.0
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 @TableName("auth_client")
 public class AuthClientEntity extends BaseEntity {
 
-  @NotNull
-  private String clientId;
+    @NotNull
+    private String clientId;
 
-  private String resourceIds;
+    private String resourceIds;
 
-  private Boolean isSecretRequired;
+    private Boolean isSecretRequired;
 
-  @NotNull
-  private String clientSecret;
+    @NotNull
+    private String clientSecret;
 
-  private Boolean isScoped;
+    private Boolean isScoped;
 
-  private String scope;
+    private String scope;
 
-  @NotNull
-  private String authorizedGrantTypes;
+    @NotNull
+    private String authorizedGrantTypes;
 
-  @NotNull
-  private String registeredRedirectUri;
+    @NotNull
+    private String registeredRedirectUri;
 
-  private String authorities;
+    private String authorities;
 
-  private Boolean isAutoApprove;
+    private Boolean isAutoApprove;
 
-  @NotNull
-  private Integer accessTokenValiditySeconds;
+    @NotNull
+    private Integer accessTokenValiditySeconds;
 
-  @NotNull
-  private Integer refreshTokenValiditySeconds;
+    @NotNull
+    private Integer refreshTokenValiditySeconds;
 
 }
+
+

@@ -22,9 +22,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class LoginFailureHandler implements AuthenticationFailureHandler {
 
-  @Override
-  public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
-      AuthenticationException exception) throws IOException, ServletException {
-    HttpUtils.writerError(HttpResponse.error(401, exception.getMessage()), response);
-  }
+    @Override
+    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
+        AuthenticationException exception) throws IOException, ServletException {
+        HttpUtils.writerError(HttpResponse.error(401, exception.getMessage()), response);
+    }
 }

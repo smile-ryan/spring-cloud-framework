@@ -26,25 +26,25 @@ import org.springframework.stereotype.Service;
 @Service
 public final class AuthUserDetailService implements UserDetailsService {
 
-  @Autowired
-  private AuthUserService authUserService;
+    @Autowired
+    private AuthUserService authUserService;
 
-  @Override
-  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    AuthUserEntity authUserEntity = this.authUserService.findByUserName(username);
-    if (authUserEntity == null) {
-      throw new UsernameNotFoundException("用户名不存在");
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        AuthUserEntity authUserEntity = this.authUserService.findByUserName(username);
+        if (authUserEntity == null) {
+            throw new UsernameNotFoundException("用户名不存在");
+        }
+        AuthUserDetails authUserDetails = new AuthUserDetails();
+        BeanUtils.copyProperties(authUserEntity, authUserDetails);
+        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_USER");
+        GrantedAuthority authority2 = new SimpleGrantedAuthority("ROLE_USER2");
+        GrantedAuthority authority3 = new SimpleGrantedAuthority("auth-service:basic-manager:read-only");
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(authority);
+        authorities.add(authority2);
+        authorities.add(authority3);
+        authUserDetails.setAuthorities(authorities);
+        return authUserDetails;
     }
-    AuthUserDetails authUserDetails = new AuthUserDetails();
-    BeanUtils.copyProperties(authUserEntity, authUserDetails);
-    GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_USER");
-    GrantedAuthority authority2 = new SimpleGrantedAuthority("ROLE_USER2");
-    GrantedAuthority authority3 = new SimpleGrantedAuthority("auth-service:basic-manager:read-only");
-    List<GrantedAuthority> authorities = new ArrayList<>();
-    authorities.add(authority);
-    authorities.add(authority2);
-    authorities.add(authority3);
-    authUserDetails.setAuthorities(authorities);
-    return authUserDetails;
-  }
 }

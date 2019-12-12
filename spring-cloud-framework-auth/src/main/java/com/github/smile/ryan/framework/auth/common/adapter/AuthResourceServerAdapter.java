@@ -22,28 +22,28 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 @EnableResourceServer
 public class AuthResourceServerAdapter extends ResourceServerConfigurerAdapter {
 
-  private final AuthenticationEntryPoint authenticationEntryPoint;
+    private final AuthenticationEntryPoint authenticationEntryPoint;
 
-  private final ForbiddenExceptionHandler forbiddenExceptionHandler;
+    private final ForbiddenExceptionHandler forbiddenExceptionHandler;
 
-  private final TokenStore tokenStore;
+    private final TokenStore tokenStore;
 
-  @Autowired
-  public AuthResourceServerAdapter(AuthenticationEntryPoint authenticationEntryPoint,
-      ForbiddenExceptionHandler forbiddenExceptionHandler, TokenStore tokenStore) {
-    this.authenticationEntryPoint = authenticationEntryPoint;
-    this.forbiddenExceptionHandler = forbiddenExceptionHandler;
-    this.tokenStore = tokenStore;
-  }
+    @Autowired
+    public AuthResourceServerAdapter(AuthenticationEntryPoint authenticationEntryPoint,
+        ForbiddenExceptionHandler forbiddenExceptionHandler, TokenStore tokenStore) {
+        this.authenticationEntryPoint = authenticationEntryPoint;
+        this.forbiddenExceptionHandler = forbiddenExceptionHandler;
+        this.tokenStore = tokenStore;
+    }
 
-  @Override
-  public void configure(ResourceServerSecurityConfigurer resources) {
-    resources.tokenStore(tokenStore)
-        .resourceId("auth-service");
-    resources.authenticationEntryPoint(authenticationEntryPoint)
-        .accessDeniedHandler(forbiddenExceptionHandler);
+    @Override
+    public void configure(ResourceServerSecurityConfigurer resources) {
+        resources.tokenStore(tokenStore)
+            .resourceId("auth-service");
+        resources.authenticationEntryPoint(authenticationEntryPoint)
+            .accessDeniedHandler(forbiddenExceptionHandler);
 
-  }
+    }
 
 //    @Override
 //    public void configure(HttpSecurity http) throws Exception {

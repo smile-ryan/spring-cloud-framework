@@ -13,14 +13,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-  @Override
-  public void configure(HttpSecurity http) throws Exception {
-    http.antMatcher("/**")
-        .authorizeRequests()
-        .antMatchers("/login", "/auth/code").permitAll()
-        .anyRequest()
-        .authenticated();
-//        .access("@permissionService.hasPermission(request)");
-  }
+    @Override
+    public void configure(HttpSecurity http) throws Exception {
+        http.antMatcher("/**")
+            .authorizeRequests()
+            .antMatchers("/login", "/auth/code").permitAll()
+            .anyRequest()
+//        .authenticated();
+            .access("@permissionService.hasPermission(request)");
+    }
 
 }

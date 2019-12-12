@@ -30,39 +30,39 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class WebMvcConfig extends WebMvcConfigurationSupport {
 
-  @Override
-  public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-    configurer.defaultContentType(MediaType.APPLICATION_JSON);
-  }
+    @Override
+    public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
+        configurer.defaultContentType(MediaType.APPLICATION_JSON);
+    }
 
-  @Override
-  public void addResourceHandlers(ResourceHandlerRegistry registry) {
-    registry.addResourceHandler("/swagger-ui.html")
-        .addResourceLocations("classpath:/META-INF/resources/");
-    registry.addResourceHandler("/webjars/**")
-        .addResourceLocations("classpath:/META-INF/resources/webjars/");
-    registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
-    registry.addResourceHandler("/favicon.ico")
-        .addResourceLocations("classpath:/static/favicon.ico");
-  }
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/swagger-ui.html")
+            .addResourceLocations("classpath:/META-INF/resources/");
+        registry.addResourceHandler("/webjars/**")
+            .addResourceLocations("classpath:/META-INF/resources/webjars/");
+        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("/favicon.ico")
+            .addResourceLocations("classpath:/static/favicon.ico");
+    }
 
-  @Bean
-  public Docket docket() {
-    ParameterBuilder builder = new ParameterBuilder();
-    List<Parameter> parameters = new ArrayList<>();
-    builder.name("Authorization").description("token").modelRef(new ModelRef("string"))
-        .parameterType("header")
-        .required(false)
-        .build();
-    parameters.add(builder.build());
+    @Bean
+    public Docket docket() {
+        ParameterBuilder builder = new ParameterBuilder();
+        List<Parameter> parameters = new ArrayList<>();
+        builder.name("Authorization").description("token").modelRef(new ModelRef("string"))
+            .parameterType("header")
+            .required(false)
+            .build();
+        parameters.add(builder.build());
 
-    return new Docket(DocumentationType.SWAGGER_2)
-        .globalOperationParameters(parameters)
-        .select()
-        .apis(RequestHandlerSelectors
-            .basePackage("com.github.smile.ryan.framework.auth.web.controller"))
-        .paths(PathSelectors.any())
-        .build();
-  }
+        return new Docket(DocumentationType.SWAGGER_2)
+            .globalOperationParameters(parameters)
+            .select()
+            .apis(RequestHandlerSelectors
+                .basePackage("com.github.smile.ryan.framework.auth.web.controller"))
+            .paths(PathSelectors.any())
+            .build();
+    }
 
 }

@@ -14,11 +14,11 @@ import org.springframework.security.core.AuthenticationException;
  */
 public class CaptchaVerificationException extends AuthenticationException {
 
-  public CaptchaVerificationException(String msg, Throwable t) {
-    super(msg, t);
-  }
+    public CaptchaVerificationException(String msg, Throwable t) {
+        super(msg, t);
+    }
 
-  public CaptchaVerificationException(String msg) {
-    super(msg);
-  }
+    public CaptchaVerificationException(String msg) {
+        super(msg);
+    }
 }

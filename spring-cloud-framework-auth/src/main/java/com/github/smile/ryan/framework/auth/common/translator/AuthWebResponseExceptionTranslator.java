@@ -25,48 +25,48 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 public class AuthWebResponseExceptionTranslator implements
     WebResponseExceptionTranslator<OAuth2Exception> {
 
-  private ThrowableAnalyzer throwableAnalyzer = new DefaultThrowableAnalyzer();
+    private ThrowableAnalyzer throwableAnalyzer = new DefaultThrowableAnalyzer();
 
-  @Override
-  public ResponseEntity<OAuth2Exception> translate(Exception e) {
-    Throwable[] causeChain = throwableAnalyzer.determineCauseChain(e);
-    Throwable ase = throwableAnalyzer.getFirstThrowableOfType(OAuth2Exception.class, causeChain);
-    if (ase != null) {
-      return handleOAuth2Exception((OAuth2Exception) ase);
+    @Override
+    public ResponseEntity<OAuth2Exception> translate(Exception e) {
+        Throwable[] causeChain = throwableAnalyzer.determineCauseChain(e);
+        Throwable ase = throwableAnalyzer.getFirstThrowableOfType(OAuth2Exception.class, causeChain);
+        if (ase != null) {
+            return handleOAuth2Exception((OAuth2Exception) ase);
+        }
+
+        ase = throwableAnalyzer.getFirstThrowableOfType(AuthenticationException.class, causeChain);
+        if (ase != null) {
+            return handleException(OAuth2Exception.INVALID_REQUEST, ase);
+        }
+
+        ase = throwableAnalyzer.getFirstThrowableOfType(AccessDeniedException.class, causeChain);
+        if (ase instanceof AccessDeniedException) {
+            return handleException(OAuth2Exception.ACCESS_DENIED, ase);
+        }
+
+        ase = throwableAnalyzer
+            .getFirstThrowableOfType(HttpRequestMethodNotSupportedException.class, causeChain);
+        if (ase instanceof HttpRequestMethodNotSupportedException) {
+            return handleException(OAuth2Exception.INVALID_REQUEST, ase);
+        }
+        return handleException(OAuth2Exception.ERROR, ase);
     }
 
-    ase = throwableAnalyzer.getFirstThrowableOfType(AuthenticationException.class, causeChain);
-    if (ase != null) {
-      return handleException(OAuth2Exception.INVALID_REQUEST, ase);
+    private ResponseEntity<OAuth2Exception> handleOAuth2Exception(OAuth2Exception e) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Cache-Control", "no-store");
+        headers.set("Pragma", "no-cache");
+        return new ResponseEntity<>(e, headers, HttpStatus.valueOf(e.getHttpErrorCode()));
     }
 
-    ase = throwableAnalyzer.getFirstThrowableOfType(AccessDeniedException.class, causeChain);
-    if (ase instanceof AccessDeniedException) {
-      return handleException(OAuth2Exception.ACCESS_DENIED, ase);
+    private ResponseEntity<OAuth2Exception> handleException(String errorCode, Throwable e) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Cache-Control", "no-store");
+        headers.set("Pragma", "no-cache");
+        OAuth2Exception exception = OAuth2Exception.create(errorCode, e.getMessage());
+        return new ResponseEntity<>(exception, headers,
+            HttpStatus.valueOf(exception.getHttpErrorCode()));
     }
-
-    ase = throwableAnalyzer
-        .getFirstThrowableOfType(HttpRequestMethodNotSupportedException.class, causeChain);
-    if (ase instanceof HttpRequestMethodNotSupportedException) {
-      return handleException(OAuth2Exception.INVALID_REQUEST, ase);
-    }
-    return handleException(OAuth2Exception.ERROR, ase);
-  }
-
-  private ResponseEntity<OAuth2Exception> handleOAuth2Exception(OAuth2Exception e) {
-    HttpHeaders headers = new HttpHeaders();
-    headers.set("Cache-Control", "no-store");
-    headers.set("Pragma", "no-cache");
-    return new ResponseEntity<>(e, headers, HttpStatus.valueOf(e.getHttpErrorCode()));
-  }
-
-  private ResponseEntity<OAuth2Exception> handleException(String errorCode, Throwable e) {
-    HttpHeaders headers = new HttpHeaders();
-    headers.set("Cache-Control", "no-store");
-    headers.set("Pragma", "no-cache");
-    OAuth2Exception exception = OAuth2Exception.create(errorCode, e.getMessage());
-    return new ResponseEntity<>(exception, headers,
-        HttpStatus.valueOf(exception.getHttpErrorCode()));
-  }
 
 }

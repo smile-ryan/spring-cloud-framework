@@ -21,60 +21,60 @@ import org.springframework.util.Assert;
  */
 public class SmsAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
-  public static final String BOOT_FORM_MOBILE_KEY = "mobile";
+    public static final String BOOT_FORM_MOBILE_KEY = "mobile";
 
-  private String mobileParameter = BOOT_FORM_MOBILE_KEY;
-  private boolean postOnly = true;
+    private String mobileParameter = BOOT_FORM_MOBILE_KEY;
+    private boolean postOnly = true;
 
-  public SmsAuthenticationFilter() {
-    super(new AntPathRequestMatcher("/authentication/mobile", "POST"));
-  }
-
-  @Override
-  public Authentication attemptAuthentication(HttpServletRequest request,
-      HttpServletResponse response) throws AuthenticationException {
-    if (postOnly && !request.getMethod().equals("POST")) {
-      throw new AuthenticationServiceException(
-          "Authentication method not supported: " + request.getMethod());
+    public SmsAuthenticationFilter() {
+        super(new AntPathRequestMatcher("/authentication/mobile", "POST"));
     }
 
-    String mobile = obtainMobile(request);
+    @Override
+    public Authentication attemptAuthentication(HttpServletRequest request,
+        HttpServletResponse response) throws AuthenticationException {
+        if (postOnly && !request.getMethod().equals("POST")) {
+            throw new AuthenticationServiceException(
+                "Authentication method not supported: " + request.getMethod());
+        }
 
-    if (mobile == null) {
-      mobile = "";
+        String mobile = obtainMobile(request);
+
+        if (mobile == null) {
+            mobile = "";
+        }
+
+        mobile = mobile.trim();
+
+        SmsAuthenticationToken authRequest = new SmsAuthenticationToken(mobile);
+
+        setDetails(request, authRequest);
+
+        return this.getAuthenticationManager().authenticate(authRequest);
     }
 
-    mobile = mobile.trim();
 
-    SmsAuthenticationToken authRequest = new SmsAuthenticationToken(mobile);
+    protected String obtainMobile(HttpServletRequest request) {
+        return request.getParameter(mobileParameter);
+    }
 
-    setDetails(request, authRequest);
+    protected void setDetails(HttpServletRequest request,
+        SmsAuthenticationToken authRequest) {
+        authRequest.setDetails(authenticationDetailsSource.buildDetails(request));
+    }
 
-    return this.getAuthenticationManager().authenticate(authRequest);
-  }
+    public void setPostOnly(boolean postOnly) {
+        this.postOnly = postOnly;
+    }
 
+    public final String getMobileParameter() {
+        return mobileParameter;
+    }
 
-  protected String obtainMobile(HttpServletRequest request) {
-    return request.getParameter(mobileParameter);
-  }
-
-  protected void setDetails(HttpServletRequest request,
-      SmsAuthenticationToken authRequest) {
-    authRequest.setDetails(authenticationDetailsSource.buildDetails(request));
-  }
-
-  public void setPostOnly(boolean postOnly) {
-    this.postOnly = postOnly;
-  }
-
-  public final String getMobileParameter() {
-    return mobileParameter;
-  }
-
-  public void setMobileParameter(String usernameParameter) {
-    Assert.hasText(usernameParameter, "Username parameter must not be empty or null");
-    this.mobileParameter = usernameParameter;
-  }
+    public void setMobileParameter(String usernameParameter) {
+        Assert.hasText(usernameParameter, "Username parameter must not be empty or null");
+        this.mobileParameter = usernameParameter;
+    }
 
 
 }

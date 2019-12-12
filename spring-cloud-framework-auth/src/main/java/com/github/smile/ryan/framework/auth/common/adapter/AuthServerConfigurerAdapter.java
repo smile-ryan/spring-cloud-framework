@@ -31,75 +31,75 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 @EnableAuthorizationServer
 public class AuthServerConfigurerAdapter extends AuthorizationServerConfigurerAdapter {
 
-  private AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager;
 
-  private AuthClientDetailsService authClientDetailsService;
+    private AuthClientDetailsService authClientDetailsService;
 
-  private TokenStore tokenStore;
+    private TokenStore tokenStore;
 
-  private JwtAccessTokenConverter jwtAccessTokenConverter;
+    private JwtAccessTokenConverter jwtAccessTokenConverter;
 
-  private AuthenticationEntryPoint authenticationEntryPoint;
+    private AuthenticationEntryPoint authenticationEntryPoint;
 
-  private AuthWebResponseExceptionTranslator authWebResponseExceptionTranslator;
+    private AuthWebResponseExceptionTranslator authWebResponseExceptionTranslator;
 
-  private BasicAuthenticationFilter basicAuthenticationFilter;
+    private BasicAuthenticationFilter basicAuthenticationFilter;
 
-  private AuthUserDetailService authUserDetailService;
+    private AuthUserDetailService authUserDetailService;
 
-  @Autowired(required = false)
-  public AuthServerConfigurerAdapter(AuthenticationManager authenticationManager,
-      AuthClientDetailsService authClientDetailsService,
-      TokenStore tokenStore, JwtAccessTokenConverter jwtAccessTokenConverter,
-      AuthenticationEntryPoint authenticationEntryPoint,
-      AuthWebResponseExceptionTranslator authWebResponseExceptionTranslator,
-      BasicAuthenticationFilter basicAuthenticationFilter,
-      AuthUserDetailService authUserDetailService) {
-    this.authenticationManager = authenticationManager;
-    this.authClientDetailsService = authClientDetailsService;
-    this.tokenStore = tokenStore;
-    this.jwtAccessTokenConverter = jwtAccessTokenConverter;
-    this.authenticationEntryPoint = authenticationEntryPoint;
-    this.authWebResponseExceptionTranslator = authWebResponseExceptionTranslator;
-    this.basicAuthenticationFilter = basicAuthenticationFilter;
-    this.authUserDetailService = authUserDetailService;
-  }
-
-  public AuthServerConfigurerAdapter() {
-    super();
-  }
-
-  @Override
-  public void configure(AuthorizationServerSecurityConfigurer security) {
-    security.allowFormAuthenticationForClients()
-        .authenticationEntryPoint(authenticationEntryPoint)
-        .tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()")
-        .addTokenEndpointAuthenticationFilter(basicAuthenticationFilter);
-    basicAuthenticationFilter.setClientDetailsService(authClientDetailsService);
-  }
-
-  @Override
-  public void configure(ClientDetailsServiceConfigurer client) throws Exception {
-    client.withClientDetails(authClientDetailsService);
-  }
-
-  @Override
-  public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
-    endpoints
-        .tokenStore(tokenStore)
-        .authenticationManager(authenticationManager)
-        .userDetailsService(authUserDetailService)
-        .allowedTokenEndpointRequestMethods(HttpMethod.POST, HttpMethod.GET);
-
-    if (!(tokenStore instanceof RedisTokenStore) && this.jwtAccessTokenConverter != null) {
-      endpoints.accessTokenConverter(jwtAccessTokenConverter);
+    @Autowired(required = false)
+    public AuthServerConfigurerAdapter(AuthenticationManager authenticationManager,
+        AuthClientDetailsService authClientDetailsService,
+        TokenStore tokenStore, JwtAccessTokenConverter jwtAccessTokenConverter,
+        AuthenticationEntryPoint authenticationEntryPoint,
+        AuthWebResponseExceptionTranslator authWebResponseExceptionTranslator,
+        BasicAuthenticationFilter basicAuthenticationFilter,
+        AuthUserDetailService authUserDetailService) {
+        this.authenticationManager = authenticationManager;
+        this.authClientDetailsService = authClientDetailsService;
+        this.tokenStore = tokenStore;
+        this.jwtAccessTokenConverter = jwtAccessTokenConverter;
+        this.authenticationEntryPoint = authenticationEntryPoint;
+        this.authWebResponseExceptionTranslator = authWebResponseExceptionTranslator;
+        this.basicAuthenticationFilter = basicAuthenticationFilter;
+        this.authUserDetailService = authUserDetailService;
     }
-    endpoints.exceptionTranslator(authWebResponseExceptionTranslator);
-    endpoints.pathMapping("/oauth/authorize", "/auth/authorize");
-    endpoints.pathMapping("/oauth/token", "/auth/token");
-    endpoints.pathMapping("/oauth/check_token", "/auth/check_token");
-    endpoints.pathMapping("/oauth/confirm_access", "/auth/grant");
-    endpoints.pathMapping("/oauth/error", "/auth/error");
-  }
+
+    public AuthServerConfigurerAdapter() {
+        super();
+    }
+
+    @Override
+    public void configure(AuthorizationServerSecurityConfigurer security) {
+        security.allowFormAuthenticationForClients()
+            .authenticationEntryPoint(authenticationEntryPoint)
+            .tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()")
+            .addTokenEndpointAuthenticationFilter(basicAuthenticationFilter);
+        basicAuthenticationFilter.setClientDetailsService(authClientDetailsService);
+    }
+
+    @Override
+    public void configure(ClientDetailsServiceConfigurer client) throws Exception {
+        client.withClientDetails(authClientDetailsService);
+    }
+
+    @Override
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
+        endpoints
+            .tokenStore(tokenStore)
+            .authenticationManager(authenticationManager)
+            .userDetailsService(authUserDetailService)
+            .allowedTokenEndpointRequestMethods(HttpMethod.POST, HttpMethod.GET);
+
+        if (!(tokenStore instanceof RedisTokenStore) && this.jwtAccessTokenConverter != null) {
+            endpoints.accessTokenConverter(jwtAccessTokenConverter);
+        }
+        endpoints.exceptionTranslator(authWebResponseExceptionTranslator);
+        endpoints.pathMapping("/oauth/authorize", "/auth/authorize");
+        endpoints.pathMapping("/oauth/token", "/auth/token");
+        endpoints.pathMapping("/oauth/check_token", "/auth/check_token");
+        endpoints.pathMapping("/oauth/confirm_access", "/auth/grant");
+        endpoints.pathMapping("/oauth/error", "/auth/error");
+    }
 
 }

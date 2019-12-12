@@ -26,26 +26,26 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 @Data
 public class DatasourceConfig {
 
-  private String username;
-  private String url;
-  private String password;
-  private String driverClassName;
+    private String username;
+    private String url;
+    private String password;
+    private String driverClassName;
 
-  @Bean
-  @Primary
-  public DataSource dataSource() {
-    log.info(this.url + ":" + this.username);
-    DruidDataSource ds = new DruidDataSource();
-    ds.setUsername(this.username);
-    ds.setPassword(this.password);
-    ds.setDriverClassName(this.driverClassName);
-    ds.setUrl(this.url);
-    return ds;
-  }
+    @Bean
+    @Primary
+    public DataSource dataSource() {
+        log.info(this.url + ":" + this.username);
+        DruidDataSource ds = new DruidDataSource();
+        ds.setUsername(this.username);
+        ds.setPassword(this.password);
+        ds.setDriverClassName(this.driverClassName);
+        ds.setUrl(this.url);
+        return ds;
+    }
 
-  @Bean
-  public DataSourceTransactionManager transactionManager() {
-    return new DataSourceTransactionManager(dataSource());
-  }
+    @Bean
+    public DataSourceTransactionManager transactionManager() {
+        return new DataSourceTransactionManager(dataSource());
+    }
 
 }

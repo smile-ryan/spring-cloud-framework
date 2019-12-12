@@ -16,13 +16,13 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class HttpUtils {
 
-  // TODO 优化
-  public static <T> void writerError(HttpResponse<T> hr, HttpServletResponse response)
-      throws IOException {
-    response.setContentType("application/json,charset=utf-8");
-    response.setStatus(hr.getStatus());
-    ObjectMapper objectMapper = new ObjectMapper();
-    objectMapper.writeValue(response.getOutputStream(), hr);
-  }
+    // TODO 优化
+    public static <T> void writerError(HttpResponse<T> hr, HttpServletResponse response)
+        throws IOException {
+        response.setContentType("application/json,charset=utf-8");
+        response.setStatus(hr.getStatus());
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.writeValue(response.getOutputStream(), hr);
+    }
 
 }

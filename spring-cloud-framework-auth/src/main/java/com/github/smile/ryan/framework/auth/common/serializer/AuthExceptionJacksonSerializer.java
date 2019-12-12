@@ -19,27 +19,27 @@ import org.springframework.web.util.HtmlUtils;
  */
 public class AuthExceptionJacksonSerializer extends StdSerializer<AuthException> {
 
-  protected AuthExceptionJacksonSerializer() {
-    super(AuthException.class);
-  }
+    protected AuthExceptionJacksonSerializer() {
+        super(AuthException.class);
+    }
 
-  @Override
-  public void serialize(AuthException value, JsonGenerator jgen,
-      SerializerProvider serializerProvider) throws IOException {
-    jgen.writeStartObject();
-    jgen.writeObjectField("status", value.getHttpErrorCode());
-    String errorMessage = value.getOAuth2ErrorCode();
-    if (errorMessage != null) {
-      errorMessage = HtmlUtils.htmlEscape(errorMessage);
+    @Override
+    public void serialize(AuthException value, JsonGenerator jgen,
+        SerializerProvider serializerProvider) throws IOException {
+        jgen.writeStartObject();
+        jgen.writeObjectField("status", value.getHttpErrorCode());
+        String errorMessage = value.getOAuth2ErrorCode();
+        if (errorMessage != null) {
+            errorMessage = HtmlUtils.htmlEscape(errorMessage);
+        }
+        jgen.writeStringField("message", errorMessage);
+        if (value.getAdditionalInformation() != null) {
+            for (Map.Entry<String, String> entry : value.getAdditionalInformation().entrySet()) {
+                String key = entry.getKey();
+                String add = entry.getValue();
+                jgen.writeStringField(key, add);
+            }
+        }
+        jgen.writeEndObject();
     }
-    jgen.writeStringField("message", errorMessage);
-    if (value.getAdditionalInformation() != null) {
-      for (Map.Entry<String, String> entry : value.getAdditionalInformation().entrySet()) {
-        String key = entry.getKey();
-        String add = entry.getValue();
-        jgen.writeStringField(key, add);
-      }
-    }
-    jgen.writeEndObject();
-  }
 }

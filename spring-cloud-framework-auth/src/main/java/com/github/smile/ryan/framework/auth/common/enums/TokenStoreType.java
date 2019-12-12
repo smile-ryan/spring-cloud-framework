@@ -11,11 +11,11 @@ package com.github.smile.ryan.framework.auth.common.enums;
  */
 public enum TokenStoreType {
 
-  memory,
+    memory,
 
-  redis,
+    redis,
 
-  jwt,
+    jwt,
 
-  jdbc
+    jdbc
 }

@@ -14,6 +14,6 @@ import com.github.smile.ryan.framework.auth.model.entity.AuthUserEntity;
  */
 public interface AuthUserService extends IService<AuthUserEntity> {
 
-  AuthUserEntity findByUserName(String userName);
+    AuthUserEntity findByUserName(String userName);
 
 }

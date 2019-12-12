@@ -29,43 +29,43 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @Setter
 public class SmsCheckFilter extends OncePerRequestFilter {
 
-  private AuthenticationFailureHandler authenticationFailureHandler;
+    private AuthenticationFailureHandler authenticationFailureHandler;
 
 
-  private AuthSecurityProperties properties;
+    private AuthSecurityProperties properties;
 
-  private boolean isDebug = false;
+    private boolean isDebug = false;
 
-  private Logger logger = LoggerFactory.getLogger(getClass());
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
-  public SmsCheckFilter() {
+    public SmsCheckFilter() {
 
-  }
-
-  @Override
-  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-      FilterChain filterChain) throws ServletException, IOException {
-
-    if (this.isDebug) {
-      logger.debug("--------------> request method " + request.getMethod());
     }
 
-    if (StringUtils.equals("/authentication/mobile", request.getRequestURI())
-        && StringUtils.equalsAnyIgnoreCase(request.getMethod(), "post")) {
-      try {
-        check(new ServletWebRequest(request));
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+        FilterChain filterChain) throws ServletException, IOException {
 
-      } catch (CaptchaVerificationException ex) {
-        authenticationFailureHandler.onAuthenticationFailure(request, response, ex);
-      }
-    } else {
+        if (this.isDebug) {
+            logger.debug("--------------> request method " + request.getMethod());
+        }
 
-      filterChain.doFilter(request, response);
+        if (StringUtils.equals("/authentication/mobile", request.getRequestURI())
+            && StringUtils.equalsAnyIgnoreCase(request.getMethod(), "post")) {
+            try {
+                check(new ServletWebRequest(request));
+
+            } catch (CaptchaVerificationException ex) {
+                authenticationFailureHandler.onAuthenticationFailure(request, response, ex);
+            }
+        } else {
+
+            filterChain.doFilter(request, response);
+        }
     }
-  }
 
-  private void check(ServletWebRequest request) throws CaptchaVerificationException {
+    private void check(ServletWebRequest request) throws CaptchaVerificationException {
 
-  }
+    }
 
 }

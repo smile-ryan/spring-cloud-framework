@@ -22,11 +22,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class UnauthorizedExceptionHandler extends OAuth2AuthenticationEntryPoint {
 
-  @Override
-  public void commence(HttpServletRequest request, HttpServletResponse response,
-      AuthenticationException e) throws IOException {
-    HttpUtils
-        .writerError(HttpResponse.error(HttpStatus.UNAUTHORIZED.value(), e.getMessage()), response);
-  }
+    @Override
+    public void commence(HttpServletRequest request, HttpServletResponse response,
+        AuthenticationException e) throws IOException {
+        HttpUtils
+            .writerError(HttpResponse.error(HttpStatus.UNAUTHORIZED.value(), e.getMessage()), response);
+    }
 
 }

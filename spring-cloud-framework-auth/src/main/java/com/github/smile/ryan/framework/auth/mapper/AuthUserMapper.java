@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 
 /**
  * <pre>
- * 名称：UserMapper
- * 描述：UserMapper.java
+ * 名称：AuthUserMapper
+ * 描述：AuthUserMapper.java
  * </pre>
  *
  * @author <a href="mailto:smile.ryan@outlook.com">Ryan Chen</a>
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AuthUserMapper extends BaseMapper<AuthUserEntity> {
 
-  @Select("select * from auth_user where username=#{username}")
-  AuthUserEntity findByUserName(@Param("username") String username);
+    @Select("select * from auth_user where username = #{username} and is_deleted = 0")
+    AuthUserEntity findByUserName(@Param("username") String username);
 
 }

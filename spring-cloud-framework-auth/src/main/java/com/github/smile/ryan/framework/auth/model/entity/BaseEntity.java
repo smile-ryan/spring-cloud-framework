@@ -18,31 +18,36 @@ import lombok.Data;
 @Data
 public class BaseEntity implements Serializable {
 
-  /**
-   * ID
-   */
-  @NotNull
-  @TableId
-  private Long id;
+    /**
+     * ID
+     */
+    @NotNull
+    @TableId
+    private Long id;
 
-  /**
-   * 创建时间
-   */
-  private Date createdAt;
+    /**
+     * 创建时间
+     */
+    private Date createdAt;
 
-  /**
-   * 创建人
-   */
-  private Long createdBy;
+    /**
+     * 创建人
+     */
+    private Long createdBy;
 
-  /**
-   * 更新时间
-   */
-  private Date updatedAt;
+    /**
+     * 更新时间
+     */
+    private Date updatedAt;
 
-  /**
-   * 更新人
-   */
-  private Long updatedBy;
+    /**
+     * 更新人
+     */
+    private Long updatedBy;
+
+    /**
+     * 是否删除
+     */
+    private Integer isDeleted;
 
 }

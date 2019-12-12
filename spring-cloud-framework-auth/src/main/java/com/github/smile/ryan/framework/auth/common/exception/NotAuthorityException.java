@@ -11,11 +11,11 @@ package com.github.smile.ryan.framework.auth.common.exception;
  */
 public class NotAuthorityException extends RuntimeException {
 
-  public NotAuthorityException() {
-    this("没有权限！");
-  }
+    public NotAuthorityException() {
+        this("没有权限！");
+    }
 
-  public NotAuthorityException(String message) {
-    super(message);
-  }
+    public NotAuthorityException(String message) {
+        super(message);
+    }
 }

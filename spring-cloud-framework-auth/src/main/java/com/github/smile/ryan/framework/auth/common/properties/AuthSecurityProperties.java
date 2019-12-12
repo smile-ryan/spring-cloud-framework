@@ -24,17 +24,17 @@ import org.springframework.context.annotation.Configuration;
 @Setter
 public class AuthSecurityProperties {
 
-  private String loginPage = "/login";
+    private String loginPage = "/login";
 
-  private String loginProcessUrl = "/authorize";
+    private String loginProcessUrl = "/authorize";
 
-  private TokenStoreType tokenStoreType = TokenStoreType.memory;
+    private TokenStoreType tokenStoreType = TokenStoreType.memory;
 
-  @NestedConfigurationProperty
-  private SmsCaptchaProperties sms = new SmsCaptchaProperties();
+    @NestedConfigurationProperty
+    private SmsCaptchaProperties sms = new SmsCaptchaProperties();
 
-  private String tokenSigningKey;
+    private String tokenSigningKey;
 
-  private String captchaParameterName = "captcha";
+    private String captchaParameterName = "captcha";
 
 }

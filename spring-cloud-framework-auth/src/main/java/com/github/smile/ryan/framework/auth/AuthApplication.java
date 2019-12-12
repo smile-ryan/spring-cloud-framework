@@ -21,8 +21,8 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 @EnableRedisHttpSession(redisNamespace = "auth", maxInactiveIntervalInSeconds = 300)
 public class AuthApplication {
 
-  public static void main(String[] args) {
-    SpringApplication.run(AuthApplication.class, args);
-  }
+    public static void main(String[] args) {
+        SpringApplication.run(AuthApplication.class, args);
+    }
 
 }

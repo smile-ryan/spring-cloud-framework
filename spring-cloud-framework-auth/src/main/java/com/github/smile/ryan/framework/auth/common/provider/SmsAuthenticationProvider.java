@@ -19,30 +19,30 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  */
 public class SmsAuthenticationProvider implements AuthenticationProvider {
 
-  private UserDetailsService userDetailsService;
+    private UserDetailsService userDetailsService;
 
-  @Override
-  public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+    @Override
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
-    SmsAuthenticationToken authenticationToken = (SmsAuthenticationToken) authentication;
+        SmsAuthenticationToken authenticationToken = (SmsAuthenticationToken) authentication;
 
-    UserDetails user = this.userDetailsService
-        .loadUserByUsername((String) authenticationToken.getPrincipal());
+        UserDetails user = this.userDetailsService
+            .loadUserByUsername((String) authenticationToken.getPrincipal());
 
-    if (user == null) {
-      throw new InternalAuthenticationServiceException("无法获取用户信息");
+        if (user == null) {
+            throw new InternalAuthenticationServiceException("无法获取用户信息");
+        }
+
+        SmsAuthenticationToken authenticationResult = new SmsAuthenticationToken(user,
+            user.getAuthorities());
+
+        authenticationResult.setDetails(authenticationToken.getCredentials());
+
+        return authenticationResult;
     }
 
-    SmsAuthenticationToken authenticationResult = new SmsAuthenticationToken(user,
-        user.getAuthorities());
-
-    authenticationResult.setDetails(authenticationToken.getCredentials());
-
-    return authenticationResult;
-  }
-
-  @Override
-  public boolean supports(Class<?> authentication) {
-    return SmsAuthenticationToken.class.isAssignableFrom(authentication);
-  }
+    @Override
+    public boolean supports(Class<?> authentication) {
+        return SmsAuthenticationToken.class.isAssignableFrom(authentication);
+    }
 }

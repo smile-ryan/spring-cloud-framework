@@ -21,20 +21,20 @@ import org.springframework.stereotype.Service;
 @Service
 public final class AuthClientDetailsService implements ClientDetailsService {
 
-  @Autowired
-  private AuthClientService clientService;
+    @Autowired
+    private AuthClientService clientService;
 
-  @Override
-  public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
+    @Override
+    public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
 
-    AuthClientEntity authClientEntity = this.clientService.findClientByClientId(clientId);
+        AuthClientEntity authClientEntity = this.clientService.findClientByClientId(clientId);
 
-    if (authClientEntity == null) {
-      throw new ClientRegistrationException("客户端不存在");
+        if (authClientEntity == null) {
+            throw new ClientRegistrationException("客户端不存在");
+        }
+        AuthClientDetails details = new AuthClientDetails(authClientEntity);
+
+        return details;
     }
-    AuthClientDetails details = new AuthClientDetails(authClientEntity);
-
-    return details;
-  }
 
 }

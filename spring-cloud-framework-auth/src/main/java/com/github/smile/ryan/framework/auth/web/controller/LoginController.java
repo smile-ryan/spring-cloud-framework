@@ -30,46 +30,40 @@ import org.springframework.web.servlet.ModelAndView;
 @SessionAttributes("authorizationRequest")
 public class LoginController {
 
-  @Autowired
-  private AuthSecurityProperties authSecurityProperties;
+    @Autowired
+    private AuthSecurityProperties authSecurityProperties;
 
-  @GetMapping("/login")
-  public String login(Model model) {
-    model.addAttribute("loginProcessUrl", authSecurityProperties.getLoginProcessUrl());
-    model.addAttribute("captcha", authSecurityProperties.getCaptchaParameterName());
-    return "/login";
-  }
+    @GetMapping("/login")
+    public String login(Model model) {
+        model.addAttribute("loginProcessUrl", authSecurityProperties.getLoginProcessUrl());
+        model.addAttribute("captcha", authSecurityProperties.getCaptchaParameterName());
+        return "/login";
+    }
 
-  @GetMapping(value = {"", "/index"})
-  public String index() {
-    return "/index";
-  }
+    @GetMapping(value = {"", "/index"})
+    public String index() {
+        return "/index";
+    }
 
-  @GetMapping("/error")
-  public String error() {
-    return "/error";
-  }
+    @GetMapping("/error")
+    public String error() {
+        return "/error";
+    }
 
-  @GetMapping("/lock/screen")
-  public String lockScreen() {
-    return "/lock_screen";
-  }
+    @GetMapping("/captcha")
+    public void captcha(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        CaptchaGenerator.generate(request, response);
+    }
 
-  @GetMapping("/captcha")
-  public void captcha(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    CaptchaGenerator.generate(request, response);
-  }
-
-  @RequestMapping("/auth/grant")
-  public ModelAndView confirmAccess(
-      @SessionAttribute("authorizationRequest") AuthorizationRequest authorizationRequest) {
-    ModelAndView view = new ModelAndView();
-    view.setViewName("grant");
-    view.addObject("clientId", authorizationRequest.getClientId());
-    view.addObject("scope", authorizationRequest.getScope());
-    view.addObject("authorize", "/auth/authorize");
-    return view;
-  }
+    @RequestMapping("/auth/grant")
+    public ModelAndView confirmAccess(@SessionAttribute("authorizationRequest") AuthorizationRequest authorizationRequest) {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("grant");
+        view.addObject("clientId", authorizationRequest.getClientId());
+        view.addObject("scope", authorizationRequest.getScope());
+        view.addObject("authorize", "/auth/authorize");
+        return view;
+    }
 
 
 }

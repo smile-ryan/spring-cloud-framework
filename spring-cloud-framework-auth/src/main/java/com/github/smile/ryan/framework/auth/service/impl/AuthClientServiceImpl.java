@@ -16,11 +16,10 @@ import org.springframework.stereotype.Service;
  * @since v1.0.0
  */
 @Service
-public class AuthClientServiceImpl extends
-    ServiceImpl<AuthClientMapper, AuthClientEntity> implements AuthClientService {
+public class AuthClientServiceImpl extends ServiceImpl<AuthClientMapper, AuthClientEntity> implements AuthClientService {
 
-  @Override
-  public AuthClientEntity findClientByClientId(String clientId) {
-    return this.baseMapper.findClientByClientId(clientId);
-  }
+    @Override
+    public AuthClientEntity findClientByClientId(String clientId) {
+        return this.baseMapper.findClientByClientId(clientId);
+    }
 }

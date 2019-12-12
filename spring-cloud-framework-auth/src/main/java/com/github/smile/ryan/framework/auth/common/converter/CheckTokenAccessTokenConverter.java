@@ -21,34 +21,34 @@ import org.springframework.stereotype.Component;
 @Component
 public class CheckTokenAccessTokenConverter implements AccessTokenConverter {
 
-  private final AccessTokenConverter accessTokenConverter;
+    private final AccessTokenConverter accessTokenConverter;
 
-  CheckTokenAccessTokenConverter() {
-    this(new DefaultAccessTokenConverter());
-  }
+    CheckTokenAccessTokenConverter() {
+        this(new DefaultAccessTokenConverter());
+    }
 
-  CheckTokenAccessTokenConverter(AccessTokenConverter accessTokenConverter) {
-    this.accessTokenConverter = accessTokenConverter;
-  }
+    CheckTokenAccessTokenConverter(AccessTokenConverter accessTokenConverter) {
+        this.accessTokenConverter = accessTokenConverter;
+    }
 
-  @Override
-  public Map<String, ?> convertAccessToken(OAuth2AccessToken token, OAuth2Authentication authentication) {
-    Map<String, Object> claims = (Map<String, Object>) this.accessTokenConverter
-        .convertAccessToken(token, authentication);
+    @Override
+    public Map<String, ?> convertAccessToken(OAuth2AccessToken token, OAuth2Authentication authentication) {
+        Map<String, Object> claims = (Map<String, Object>) this.accessTokenConverter
+            .convertAccessToken(token, authentication);
 
-    // gh-1070
-    claims.put("active", true);    // Always true if token exists and not expired
+        // gh-1070
+        claims.put("active", true);    // Always true if token exists and not expired
 
-    return claims;
-  }
+        return claims;
+    }
 
-  @Override
-  public OAuth2AccessToken extractAccessToken(String value, Map<String, ?> map) {
-    return this.accessTokenConverter.extractAccessToken(value, map);
-  }
+    @Override
+    public OAuth2AccessToken extractAccessToken(String value, Map<String, ?> map) {
+        return this.accessTokenConverter.extractAccessToken(value, map);
+    }
 
-  @Override
-  public OAuth2Authentication extractAuthentication(Map<String, ?> map) {
-    return this.accessTokenConverter.extractAuthentication(map);
-  }
+    @Override
+    public OAuth2Authentication extractAuthentication(Map<String, ?> map) {
+        return this.accessTokenConverter.extractAuthentication(map);
+    }
 }

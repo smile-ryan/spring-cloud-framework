@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 
 /**
  * <pre>
- * 名称：ClientMapper
- * 描述：ClientMapper.java
+ * 名称：AuthClientMapper
+ * 描述：AuthClientMapper.java
  * </pre>
  *
  * @author <a href="mailto:smile.ryan@outlook.com">Ryan Chen</a>
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AuthClientMapper extends BaseMapper<AuthClientEntity> {
 
-  @Select("select * from auth_client where client_id=#{clientId}")
-  AuthClientEntity findClientByClientId(@Param("clientId") String clientId);
+    @Select("select * from auth_client where client_id = #{clientId} and is_deleted = 0")
+    AuthClientEntity findClientByClientId(@Param("clientId") String clientId);
 
 }

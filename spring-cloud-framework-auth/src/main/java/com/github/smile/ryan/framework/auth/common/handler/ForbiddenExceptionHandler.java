@@ -22,10 +22,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class ForbiddenExceptionHandler implements AccessDeniedHandler {
 
-  @Override
-  public void handle(HttpServletRequest request, HttpServletResponse response,
-      AccessDeniedException ex) throws IOException {
-    HttpUtils
-        .writerError(HttpResponse.error(HttpStatus.FORBIDDEN.value(), ex.getMessage()), response);
-  }
+    @Override
+    public void handle(HttpServletRequest request, HttpServletResponse response,
+        AccessDeniedException ex) throws IOException {
+        HttpUtils
+            .writerError(HttpResponse.error(HttpStatus.FORBIDDEN.value(), ex.getMessage()), response);
+    }
 }

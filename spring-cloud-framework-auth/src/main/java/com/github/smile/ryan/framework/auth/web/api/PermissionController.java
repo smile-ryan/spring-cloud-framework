@@ -1,4 +1,4 @@
-package com.github.smile.ryan.framework.auth.web.controller;
+package com.github.smile.ryan.framework.auth.web.api;
 
 import com.github.smile.ryan.framework.auth.model.response.HttpResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -18,13 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Slf4j
 @RestController
-@RequestMapping("/privilege")
-public class PrivilegeController {
+@RequestMapping("/permission")
+public class PermissionController {
 
-  @PreAuthorize("permitAll()")
-  @GetMapping("/permitAll")
-  public HttpResponse<String> permitAll() {
-    return HttpResponse.ok("permitAll");
-  }
+    @PreAuthorize("permitAll()")
+    @GetMapping("/permitAll")
+    public HttpResponse<String> permitAll() {
+        return HttpResponse.ok("permitAll");
+    }
 
 }

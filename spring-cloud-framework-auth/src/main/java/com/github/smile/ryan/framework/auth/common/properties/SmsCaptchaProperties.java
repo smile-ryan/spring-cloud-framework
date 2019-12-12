@@ -16,8 +16,8 @@ import lombok.Setter;
 @Setter
 public class SmsCaptchaProperties {
 
-  private Integer expirationTime = 240;
-  private Integer length = 4;
-  private String mobileParameter = "mobile";
+    private Integer expirationTime = 240;
+    private Integer length = 4;
+    private String mobileParameter = "mobile";
 
 }

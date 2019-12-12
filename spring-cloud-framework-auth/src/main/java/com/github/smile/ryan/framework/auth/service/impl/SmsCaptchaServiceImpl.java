@@ -20,14 +20,14 @@ import org.springframework.web.context.request.ServletWebRequest;
 @Component
 public class SmsCaptchaServiceImpl implements SmsCaptchaService {
 
-  @Autowired
-  private AuthSecurityProperties authSecurityProperties;
+    @Autowired
+    private AuthSecurityProperties authSecurityProperties;
 
-  @Override
-  public SmsCaptcha generator(ServletWebRequest request) {
-    String smsCode = RandomStringUtils.randomNumeric(authSecurityProperties.getSms().getLength());
-    return new SmsCaptcha(smsCode, authSecurityProperties.getSms().getExpirationTime());
-  }
+    @Override
+    public SmsCaptcha generator(ServletWebRequest request) {
+        String smsCode = RandomStringUtils.randomNumeric(authSecurityProperties.getSms().getLength());
+        return new SmsCaptcha(smsCode, authSecurityProperties.getSms().getExpirationTime());
+    }
 
 
 }

@@ -1,4 +1,4 @@
-package com.github.smile.ryan.framework.auth.web.controller;
+package com.github.smile.ryan.framework.auth.web.api;
 
 import com.github.smile.ryan.framework.auth.model.response.HttpResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -22,26 +22,26 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/test")
 public class TestController {
 
-  @GetMapping
-  public String test() {
-    return "test";
-  }
+    @GetMapping
+    public String test() {
+        return "test";
+    }
 
-  @PreAuthorize("#oauth2.hasScope('all')")
-  @GetMapping("/message")
-  public HttpResponse<String> message() {
-    return HttpResponse.ok("燃烧我的卡路里。。。");
-  }
+    @PreAuthorize("#oauth2.hasScope('all')")
+    @GetMapping("/message")
+    public HttpResponse<String> message() {
+        return HttpResponse.ok("燃烧我的卡路里。。。");
+    }
 
-  @GetMapping("/code")
-  public HttpResponse<String> getCode(String code) {
-    log.info(code);
-    return HttpResponse.ok("hello, " + code);
-  }
+    @GetMapping("/code")
+    public HttpResponse<String> getCode(String code) {
+        log.info(code);
+        return HttpResponse.ok("hello, " + code);
+    }
 
-  @GetMapping("/get-session-timeout")
-  public int getSessionTimeout(HttpServletRequest request) {
-    return request.getSession().getMaxInactiveInterval();
-  }
+    @GetMapping("/get-session-timeout")
+    public int getSessionTimeout(HttpServletRequest request) {
+        return request.getSession().getMaxInactiveInterval();
+    }
 
 }

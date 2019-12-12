@@ -11,11 +11,11 @@ package com.github.smile.ryan.framework.auth.common.exception;
  */
 public class NotAuthException extends RuntimeException {
 
-  public NotAuthException() {
-    this("没有认证！");
-  }
+    public NotAuthException() {
+        this("没有认证！");
+    }
 
-  public NotAuthException(String message) {
-    super(message);
-  }
+    public NotAuthException(String message) {
+        super(message);
+    }
 }

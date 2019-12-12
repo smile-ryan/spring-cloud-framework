@@ -19,46 +19,46 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Data
 public class AuthUserDetails implements UserDetails {
 
-  private String username;
+    private String username;
 
-  private String email;
+    private String email;
 
-  private Boolean isEnabled;
+    private Boolean isEnabled;
 
-  private Boolean isExpired;
+    private Boolean isExpired;
 
-  private Boolean isLocked;
+    private Boolean isLocked;
 
-  @JsonIgnore
-  private String password;
+    @JsonIgnore
+    private String password;
 
-  private String gender;
+    private String gender;
 
-  @TableField(exist = false)
-  private List<GrantedAuthority> authorities;
+    @TableField(exist = false)
+    private List<GrantedAuthority> authorities;
 
-  @Override
-  public List<? extends GrantedAuthority> getAuthorities() {
-    return authorities;
-  }
+    @Override
+    public List<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
 
-  @Override
-  public boolean isAccountNonExpired() {
-    return !this.isExpired;
-  }
+    @Override
+    public boolean isAccountNonExpired() {
+        return !this.isExpired;
+    }
 
-  @Override
-  public boolean isAccountNonLocked() {
-    return !this.isLocked;
-  }
+    @Override
+    public boolean isAccountNonLocked() {
+        return !this.isLocked;
+    }
 
-  @Override
-  public boolean isCredentialsNonExpired() {
-    return !this.isExpired;
-  }
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return !this.isExpired;
+    }
 
-  @Override
-  public boolean isEnabled() {
-    return this.isEnabled;
-  }
+    @Override
+    public boolean isEnabled() {
+        return this.isEnabled;
+    }
 }

@@ -2,6 +2,7 @@ package com.github.smile.ryan.framework.auth.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * <pre>
@@ -13,21 +14,24 @@ import lombok.Data;
  * @since v1.0.0
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 @TableName("auth_user")
 public class AuthUserEntity extends BaseEntity {
 
-  private String username;
+    private String username;
 
-  private String email;
+    private String email;
 
-  private Boolean isEnabled;
+    private Boolean isEnabled;
 
-  private Boolean isExpired;
+    private Boolean isExpired;
 
-  private Boolean isLocked;
+    private Boolean isLocked;
 
-  private String password;
+    private String password;
 
-  private String gender;
+    private String gender;
+
+    private Long orgId;
 
 }

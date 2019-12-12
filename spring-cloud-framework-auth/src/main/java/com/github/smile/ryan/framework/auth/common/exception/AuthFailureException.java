@@ -11,11 +11,11 @@ package com.github.smile.ryan.framework.auth.common.exception;
  */
 public class AuthFailureException extends RuntimeException {
 
-  public AuthFailureException() {
-    this("认证失败！");
-  }
+    public AuthFailureException() {
+        this("认证失败！");
+    }
 
-  public AuthFailureException(String message) {
-    super(message);
-  }
+    public AuthFailureException(String message) {
+        super(message);
+    }
 }

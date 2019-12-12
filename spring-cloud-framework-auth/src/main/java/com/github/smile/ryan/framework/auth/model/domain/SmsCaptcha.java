@@ -14,15 +14,15 @@ import lombok.Data;
 @Data
 public class SmsCaptcha {
 
-  private String code;
-  private Integer expirationTime;
+    private String code;
+    private Integer expirationTime;
 
-  public SmsCaptcha() {
-  }
+    public SmsCaptcha() {
+    }
 
 
-  public SmsCaptcha(String code, Integer expirationTime) {
-    this.code = code;
-    this.expirationTime = expirationTime;
-  }
+    public SmsCaptcha(String code, Integer expirationTime) {
+        this.code = code;
+        this.expirationTime = expirationTime;
+    }
 }

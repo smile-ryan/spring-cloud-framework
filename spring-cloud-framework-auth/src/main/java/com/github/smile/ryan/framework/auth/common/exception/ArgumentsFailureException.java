@@ -11,11 +11,11 @@ package com.github.smile.ryan.framework.auth.common.exception;
  */
 public class ArgumentsFailureException extends RuntimeException {
 
-  public ArgumentsFailureException() {
-    this("参数错误");
-  }
+    public ArgumentsFailureException() {
+        this("参数错误");
+    }
 
-  public ArgumentsFailureException(String message) {
-    super(message);
-  }
+    public ArgumentsFailureException(String message) {
+        super(message);
+    }
 }

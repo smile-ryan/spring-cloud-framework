@@ -17,16 +17,16 @@ import org.springframework.stereotype.Service;
 @Service("permissionService")
 public class PermissionServiceImpl implements PermissionService {
 
-  @Override
-  public Boolean hasPermission(HttpServletRequest request) {
-    String authorization = request.getHeader("Authorization");
-    String strictStrategy = request.getHeader("X-Strict-Strategy");
-    boolean hasPermission = !StringUtils.equalsIgnoreCase(request.getHeader("X-Strict-Strategy"), Boolean.toString(true));
+    @Override
+    public Boolean hasPermission(HttpServletRequest request) {
+        String authorization = request.getHeader("Authorization");
+        String strictStrategy = request.getHeader("X-Strict-Strategy");
+        boolean hasPermission = !StringUtils.equalsIgnoreCase(request.getHeader("X-Strict-Strategy"), Boolean.toString(true));
 
-    System.out.println("------------------" + authorization);
-    System.out.println("------------------" + strictStrategy);
-    System.out.println("------------------" + hasPermission);
+        System.out.println("------------------" + authorization);
+        System.out.println("------------------" + strictStrategy);
+        System.out.println("------------------" + hasPermission);
 
-    return hasPermission;
-  }
+        return hasPermission;
+    }
 }
