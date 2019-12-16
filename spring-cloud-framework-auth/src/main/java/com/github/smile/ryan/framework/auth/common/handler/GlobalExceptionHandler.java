@@ -4,7 +4,7 @@ import com.github.smile.ryan.framework.auth.common.exception.ArgumentsFailureExc
 import com.github.smile.ryan.framework.auth.common.exception.AuthFailureException;
 import com.github.smile.ryan.framework.auth.common.exception.NotAuthException;
 import com.github.smile.ryan.framework.auth.common.exception.NotAuthorityException;
-import com.github.smile.ryan.framework.auth.model.response.HttpResponse;
+import com.github.smile.ryan.framework.auth.model.response.MessageResponse;
 import java.util.stream.Collectors;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;
+import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
 import org.springframework.security.oauth2.provider.ClientRegistrationException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
@@ -48,22 +49,23 @@ public final class GlobalExceptionHandler {
         MissingServletRequestParameterException.class,
         ConstraintViolationException.class,
         BindException.class,
+        InvalidTokenException.class,
         ArgumentsFailureException.class,
         MethodArgumentNotValidException.class,
         UsernameNotFoundException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public HttpResponse badRequestExceptionHandle(Exception e) {
+    public MessageResponse badRequestExceptionHandle(Exception e) {
         log.warn(e.getMessage());
         if (e instanceof BindException) {
             // Spring Validation Exception 处理@Valid失败后异常
             String message = ((BindException) e).getBindingResult().getAllErrors().stream()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.joining(", "));
-            return HttpResponse.error(HttpStatus.BAD_REQUEST.value(), message);
+            return MessageResponse.error(HttpStatus.BAD_REQUEST.value(), message);
         } else if (e instanceof ConstraintViolationException) {
             // Spring Validation Exception 处理@RequestParam失败后异常
             String message = ((ConstraintViolationException) e).getConstraintViolations().stream()
                 .map(ConstraintViolation::getMessage).collect(Collectors.joining(", "));
-            return HttpResponse.error(HttpStatus.BAD_REQUEST.value(), message);
+            return MessageResponse.error(HttpStatus.BAD_REQUEST.value(), message);
         } else if (e instanceof MethodArgumentNotValidException) {
             // Spring Validation Exception 处理@RequestBody失败后异常
             String message;
@@ -77,59 +79,59 @@ public final class GlobalExceptionHandler {
                 message = String.format("%s: %s, rejectedValue: %s", fieldError.getField(),
                     fieldError.getDefaultMessage(), fieldError.getRejectedValue());
             }
-            return HttpResponse.error(HttpStatus.BAD_REQUEST.value(), message);
+            return MessageResponse.error(HttpStatus.BAD_REQUEST.value(), message);
         }
-        return HttpResponse.error(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+        return MessageResponse.error(HttpStatus.BAD_REQUEST.value(), e.getMessage());
     }
 
     @ExceptionHandler(value = {NotAuthException.class, AuthFailureException.class,
         InvalidGrantException.class})
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public HttpResponse unauthorizedExceptionHandle(NotAuthException e) {
+    public MessageResponse unauthorizedExceptionHandle(NotAuthException e) {
         log.warn(e.getMessage());
-        return HttpResponse.error(HttpStatus.UNAUTHORIZED.value(), e.getMessage());
+        return MessageResponse.error(HttpStatus.UNAUTHORIZED.value(), e.getMessage());
     }
 
     @ExceptionHandler(NotAuthorityException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    public HttpResponse forbiddenExceptionHandle(NotAuthorityException e) {
+    public MessageResponse forbiddenExceptionHandle(NotAuthorityException e) {
         log.warn(e.getMessage());
-        return HttpResponse.error(HttpStatus.FORBIDDEN.value(), e.getMessage());
+        return MessageResponse.error(HttpStatus.FORBIDDEN.value(), e.getMessage());
     }
 
     @ExceptionHandler(value = NoHandlerFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public HttpResponse notFoundExceptionHandle(Exception e) {
+    public MessageResponse notFoundExceptionHandle(Exception e) {
         log.warn(e.getMessage());
-        return HttpResponse.error(HttpStatus.NOT_FOUND.value(), e.getMessage());
+        return MessageResponse.error(HttpStatus.NOT_FOUND.value(), e.getMessage());
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-    public HttpResponse methodNotAllowedExceptionHandle(Exception e) {
+    public MessageResponse methodNotAllowedExceptionHandle(Exception e) {
         log.warn(e.getMessage());
-        return HttpResponse.error(HttpStatus.METHOD_NOT_ALLOWED.value(), e.getMessage());
+        return MessageResponse.error(HttpStatus.METHOD_NOT_ALLOWED.value(), e.getMessage());
     }
 
     @ExceptionHandler(HttpMediaTypeNotAcceptableException.class)
     @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
-    public HttpResponse notAcceptableExceptionHandle(Exception e) {
+    public MessageResponse notAcceptableExceptionHandle(Exception e) {
         log.warn(e.getMessage());
-        return HttpResponse.error(HttpStatus.NOT_ACCEPTABLE.value(), e.getMessage());
+        return MessageResponse.error(HttpStatus.NOT_ACCEPTABLE.value(), e.getMessage());
     }
 
     @ExceptionHandler(value = HttpMediaTypeNotSupportedException.class)
     @ResponseStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
-    public HttpResponse unsupportedMediaTypeExceptionHandle(Exception e) {
+    public MessageResponse unsupportedMediaTypeExceptionHandle(Exception e) {
         log.warn(e.getMessage());
-        return HttpResponse.error(HttpStatus.UNSUPPORTED_MEDIA_TYPE.value(), e.getMessage());
+        return MessageResponse.error(HttpStatus.UNSUPPORTED_MEDIA_TYPE.value(), e.getMessage());
     }
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public HttpResponse internalServerExceptionHandle(Exception e) {
+    public MessageResponse internalServerExceptionHandle(Exception e) {
         log.error(e.getMessage(), e);
-        return HttpResponse.error(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
+        return MessageResponse.error(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
     }
 
 }

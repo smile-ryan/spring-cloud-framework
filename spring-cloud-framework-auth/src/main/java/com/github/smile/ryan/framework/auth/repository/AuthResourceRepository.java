@@ -1,5 +1,8 @@
 package com.github.smile.ryan.framework.auth.repository;
 
+import com.github.smile.ryan.framework.auth.model.entity.AuthResourceEntity;
+import org.apache.ibatis.annotations.Select;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -14,5 +17,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AuthResourceRepository {
 
+    @Select("select * from auth_resource where id = #{id} and is_deleted = 0")
+    AuthResourceEntity findOneById(@Param("id") Long id);
 
 }

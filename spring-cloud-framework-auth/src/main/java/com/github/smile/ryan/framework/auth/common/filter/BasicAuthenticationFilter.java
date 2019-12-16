@@ -2,7 +2,7 @@ package com.github.smile.ryan.framework.auth.common.filter;
 
 import com.github.smile.ryan.framework.auth.common.util.HttpUtils;
 import com.github.smile.ryan.framework.auth.model.domain.AuthClientDetails;
-import com.github.smile.ryan.framework.auth.model.response.HttpResponse;
+import com.github.smile.ryan.framework.auth.model.response.MessageResponse;
 import java.io.IOException;
 import java.util.Base64;
 import javax.servlet.FilterChain;
@@ -49,7 +49,7 @@ public class BasicAuthenticationFilter extends OncePerRequestFilter {
         }
         String[] clientDetails = this.isHasClientDetails(request);
         if (clientDetails == null) {
-            HttpResponse<String> bs = HttpResponse.error(HttpStatus.UNAUTHORIZED.value(), "请求中未包含客户端信息");
+            MessageResponse<String> bs = MessageResponse.error(HttpStatus.UNAUTHORIZED.value(), "请求中未包含客户端信息");
             HttpUtils.writerError(bs, response);
             return;
         }

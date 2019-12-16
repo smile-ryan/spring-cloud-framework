@@ -1,9 +1,8 @@
 package com.github.smile.ryan.framework.auth.common.util;
 
 import com.github.smile.ryan.framework.auth.model.domain.AuthUserDetails;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 
 /**
  * <pre>
@@ -17,22 +16,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public class AuthUtils {
 
     public static AuthUserDetails getCurrentUser() {
-        SecurityContext context = SecurityContextHolder.getContext();
-        if (context == null) {
-            return null;
+        if (SecurityContextHolder.getContext() != null &&
+            SecurityContextHolder.getContext().getAuthentication() != null &&
+            SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof AuthUserDetails) {
+            return (AuthUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         }
-        Authentication authentication = context.getAuthentication();
-        if (authentication == null) {
-            return null;
-        }
-        Object principal = authentication.getPrincipal();
-        if (principal == null) {
-            return null;
-        }
-        if (principal instanceof AuthUserDetails) {
-            return (AuthUserDetails) principal;
-        }
-        return null;
+        throw new OAuth2Exception("Can not get current user info.");
     }
 
 }

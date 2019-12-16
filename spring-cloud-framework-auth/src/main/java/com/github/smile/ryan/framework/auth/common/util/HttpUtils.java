@@ -1,7 +1,7 @@
 package com.github.smile.ryan.framework.auth.common.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.smile.ryan.framework.auth.model.response.HttpResponse;
+import com.github.smile.ryan.framework.auth.model.response.MessageResponse;
 import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 public class HttpUtils {
 
     // TODO 优化
-    public static <T> void writerError(HttpResponse<T> hr, HttpServletResponse response)
+    public static <T> void writerError(MessageResponse<T> hr, HttpServletResponse response)
         throws IOException {
         response.setContentType("application/json,charset=utf-8");
         response.setStatus(hr.getStatus());

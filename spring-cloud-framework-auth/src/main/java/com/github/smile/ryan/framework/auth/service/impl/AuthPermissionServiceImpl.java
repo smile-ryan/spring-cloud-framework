@@ -1,9 +1,14 @@
 package com.github.smile.ryan.framework.auth.service.impl;
 
+import com.github.smile.ryan.framework.auth.common.util.BeanUtils;
 import com.github.smile.ryan.framework.auth.model.entity.AuthPermissionEntity;
+import com.github.smile.ryan.framework.auth.model.response.AuthPermissionResponse;
+import com.github.smile.ryan.framework.auth.model.response.AuthResourceResponse;
 import com.github.smile.ryan.framework.auth.repository.AuthPermissionRepository;
 import com.github.smile.ryan.framework.auth.service.AuthPermissionService;
+import com.github.smile.ryan.framework.auth.service.AuthResourceService;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,13 +27,28 @@ public class AuthPermissionServiceImpl implements AuthPermissionService {
     @Autowired
     private AuthPermissionRepository authPermissionRepository;
 
+    @Autowired
+    private AuthResourceService authResourceService;
+
     @Override
-    public List<AuthPermissionEntity> findAllByUserId(Long userId) {
-        return authPermissionRepository.findAllByUserId(userId);
+    public List<AuthPermissionResponse> findAllByUserId(Long userId) {
+        List<AuthPermissionEntity> permissionEntities = authPermissionRepository.findAllByUserId(userId);
+        return permissionEntities.stream().map(permissionEntity -> {
+            AuthPermissionResponse permissionResponse = new AuthPermissionResponse();
+            BeanUtils.copyProperties(permissionEntity, permissionResponse);
+            return permissionResponse;
+        }).collect(Collectors.toList());
     }
 
     @Override
-    public List<AuthPermissionEntity> findAllByRoleId(Long roleId) {
-        return authPermissionRepository.findAllByRoleId(roleId);
+    public List<AuthPermissionResponse> findAllByRoleId(Long roleId) {
+        List<AuthPermissionEntity> permissionEntities = authPermissionRepository.findAllByRoleId(roleId);
+        return permissionEntities.stream().map(permissionEntity -> {
+            AuthResourceResponse resourceResponse = authResourceService.findOneById(permissionEntity.getResourceId());
+            AuthPermissionResponse permissionResponse = new AuthPermissionResponse();
+            BeanUtils.copyProperties(permissionEntity, permissionResponse);
+            permissionResponse.setResource(resourceResponse);
+            return permissionResponse;
+        }).collect(Collectors.toList());
     }
 }

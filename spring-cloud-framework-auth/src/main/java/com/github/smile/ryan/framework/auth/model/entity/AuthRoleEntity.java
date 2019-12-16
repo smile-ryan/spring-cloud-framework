@@ -5,8 +5,8 @@ import lombok.EqualsAndHashCode;
 
 /**
  * <pre>
- * 名称：AuthRoleEntity
- * 描述：AuthRoleEntity.java
+ * 名称：AuthRoleResponse
+ * 描述：AuthRoleResponse.java
  * </pre>
  *
  * @author <a href="mailto:smile.ryan@outlook.com">Ryan Chen</a>

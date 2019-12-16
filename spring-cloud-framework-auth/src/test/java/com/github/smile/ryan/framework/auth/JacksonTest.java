@@ -1,6 +1,7 @@
 package com.github.smile.ryan.framework.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.MapType;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import java.io.IOException;
 import java.util.HashMap;
@@ -30,9 +31,11 @@ public class JacksonTest {
     String x = objectMapper.writeValueAsString(map);
     System.out.println(x);
     System.out.println(objectMapper.writeValueAsString(sets));
-    String y = "<HashMap><HashSet><item>1</item><item>21</item></HashSet></HashMap>";
+//    String y = "<HashMap><name><values>1</values><values>21</values></name><a><aa>1</aa></a></HashMap>";
+    String y = "<HashMap><values>1</values><values>21</values></HashMap>";
+    MapType collectionType = objectMapper.getTypeFactory().constructMapType(HashMap.class, String.class, Set.class);
     System.out.println(objectMapper.readValue(x, Map.class));
-    System.out.println(objectMapper.readValue(y, Map.class));
+    System.out.println(objectMapper.readValue(y, collectionType).toString());
   }
 
 }

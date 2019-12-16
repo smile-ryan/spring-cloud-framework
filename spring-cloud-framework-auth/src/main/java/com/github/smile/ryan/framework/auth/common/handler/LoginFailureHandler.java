@@ -1,7 +1,7 @@
 package com.github.smile.ryan.framework.auth.common.handler;
 
 import com.github.smile.ryan.framework.auth.common.util.HttpUtils;
-import com.github.smile.ryan.framework.auth.model.response.HttpResponse;
+import com.github.smile.ryan.framework.auth.model.response.MessageResponse;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +25,6 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
         AuthenticationException exception) throws IOException, ServletException {
-        HttpUtils.writerError(HttpResponse.error(401, exception.getMessage()), response);
+        HttpUtils.writerError(MessageResponse.error(401, exception.getMessage()), response);
     }
 }

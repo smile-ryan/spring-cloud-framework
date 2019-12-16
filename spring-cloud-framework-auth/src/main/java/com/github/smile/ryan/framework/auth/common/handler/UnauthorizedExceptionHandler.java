@@ -1,7 +1,7 @@
 package com.github.smile.ryan.framework.auth.common.handler;
 
 import com.github.smile.ryan.framework.auth.common.util.HttpUtils;
-import com.github.smile.ryan.framework.auth.model.response.HttpResponse;
+import com.github.smile.ryan.framework.auth.model.response.MessageResponse;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,7 +26,7 @@ public class UnauthorizedExceptionHandler extends OAuth2AuthenticationEntryPoint
     public void commence(HttpServletRequest request, HttpServletResponse response,
         AuthenticationException e) throws IOException {
         HttpUtils
-            .writerError(HttpResponse.error(HttpStatus.UNAUTHORIZED.value(), e.getMessage()), response);
+            .writerError(MessageResponse.error(HttpStatus.UNAUTHORIZED.value(), e.getMessage()), response);
     }
 
 }

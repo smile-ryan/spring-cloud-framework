@@ -3,9 +3,11 @@ package com.github.smile.ryan.framework.auth.common.service;
 import com.github.smile.ryan.framework.auth.common.util.BeanUtils;
 import com.github.smile.ryan.framework.auth.model.domain.AuthUserDetails;
 import com.github.smile.ryan.framework.auth.model.entity.AuthUserEntity;
+import com.github.smile.ryan.framework.auth.model.response.AuthRoleResponse;
+import com.github.smile.ryan.framework.auth.service.AuthRoleService;
 import com.github.smile.ryan.framework.auth.service.AuthUserService;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -29,6 +31,9 @@ public final class AuthUserDetailService implements UserDetailsService {
     @Autowired
     private AuthUserService authUserService;
 
+    @Autowired
+    private AuthRoleService authRoleService;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         AuthUserEntity authUserEntity = this.authUserService.findByUserName(username);
@@ -37,13 +42,8 @@ public final class AuthUserDetailService implements UserDetailsService {
         }
         AuthUserDetails authUserDetails = new AuthUserDetails();
         BeanUtils.copyProperties(authUserEntity, authUserDetails);
-        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_USER");
-        GrantedAuthority authority2 = new SimpleGrantedAuthority("ROLE_USER2");
-        GrantedAuthority authority3 = new SimpleGrantedAuthority("auth-service:basic-manager:read-only");
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(authority);
-        authorities.add(authority2);
-        authorities.add(authority3);
+        List<AuthRoleResponse> roles = authRoleService.findAllByUserId(authUserEntity.getId());
+        List<GrantedAuthority> authorities = roles.stream().map(role -> new SimpleGrantedAuthority(role.getRoleCode())).collect(Collectors.toList());
         authUserDetails.setAuthorities(authorities);
         return authUserDetails;
     }

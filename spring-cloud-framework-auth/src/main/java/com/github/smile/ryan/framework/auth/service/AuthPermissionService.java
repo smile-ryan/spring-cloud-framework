@@ -1,6 +1,6 @@
 package com.github.smile.ryan.framework.auth.service;
 
-import com.github.smile.ryan.framework.auth.model.entity.AuthPermissionEntity;
+import com.github.smile.ryan.framework.auth.model.response.AuthPermissionResponse;
 import java.util.List;
 
 /**
@@ -14,8 +14,8 @@ import java.util.List;
  */
 public interface AuthPermissionService {
 
-    List<AuthPermissionEntity> findAllByUserId(Long userId);
+    List<AuthPermissionResponse> findAllByUserId(Long userId);
 
-    List<AuthPermissionEntity> findAllByRoleId(Long roleId);
+    List<AuthPermissionResponse> findAllByRoleId(Long roleId);
 
 }

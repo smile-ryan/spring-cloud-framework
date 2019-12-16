@@ -1,6 +1,6 @@
 package com.github.smile.ryan.framework.auth.service;
 
-import com.github.smile.ryan.framework.auth.model.entity.AuthRoleEntity;
+import com.github.smile.ryan.framework.auth.model.response.AuthRoleResponse;
 import java.util.List;
 
 /**
@@ -14,6 +14,6 @@ import java.util.List;
  */
 public interface AuthRoleService {
 
-    List<AuthRoleEntity> findAllByUserId(Long userId);
+    List<AuthRoleResponse> findAllByUserId(Long userId);
 
 }

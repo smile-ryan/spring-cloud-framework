@@ -1,7 +1,7 @@
 package com.github.smile.ryan.framework.auth.common.handler;
 
 import com.github.smile.ryan.framework.auth.common.util.HttpUtils;
-import com.github.smile.ryan.framework.auth.model.response.HttpResponse;
+import com.github.smile.ryan.framework.auth.model.response.MessageResponse;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,6 +26,6 @@ public class ForbiddenExceptionHandler implements AccessDeniedHandler {
     public void handle(HttpServletRequest request, HttpServletResponse response,
         AccessDeniedException ex) throws IOException {
         HttpUtils
-            .writerError(HttpResponse.error(HttpStatus.FORBIDDEN.value(), ex.getMessage()), response);
+            .writerError(MessageResponse.error(HttpStatus.FORBIDDEN.value(), ex.getMessage()), response);
     }
 }

@@ -35,8 +35,7 @@ public interface AuthPermissionRepository {
         + "left join auth_role_permission rp on rp.role_id = r.id "
         + "left join auth_permission p on rp.permission_id = p.id "
         + "where "
-        + "u.id = #{userId} and u.is_deleted = 0 and ur.is_deleted = 0 "
-        + "and r.is_deleted = 0 and rp.is_deleted = 0 and p.is_deleted = 0")
+        + "r.id = #{roleId} and r.is_deleted = 0 and rp.is_deleted = 0 and p.is_deleted = 0")
     List<AuthPermissionEntity> findAllByRoleId(@Param("roleId") Long roleId);
 
 }

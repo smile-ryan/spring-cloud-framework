@@ -1,5 +1,6 @@
-package com.github.smile.ryan.framework.auth.model.entity;
+package com.github.smile.ryan.framework.auth.model.response;
 
+import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -14,10 +15,12 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class AuthRolePermissionEntity extends BaseEntity {
+public class AuthRoleResponse extends BaseResponse {
 
-    private Long roleId;
+    private String roleCode;
 
-    private Long permissionId;
+    private String roleName;
+
+    private List<AuthPermissionResponse> permissions;
 
 }

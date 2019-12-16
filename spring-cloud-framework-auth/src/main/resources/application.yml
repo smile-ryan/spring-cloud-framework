@@ -16,7 +16,7 @@ spring:
       initial-size: 5
       max-active: 20
       max-evictable-idle-time-millis: 600000
-      min-evictable-idle-time-millis: 300000
+      min-evictable-idle-time-millis: 30000
       max-open-prepared-statements: -1
       max-wait: 3000
       min-idle: 5
@@ -61,9 +61,9 @@ spring:
   aop:
     proxy-target-class: true
   jackson:
-    locale: zh_CN
-    time-zone: GMT+8
-    date-format: yyyy-MM-dd HH:mm:ss Z
+#    locale: zh_CN
+#    time-zone: GMT+8
+#    date-format: yyyy-MM-dd HH:mm:ssZ
     defaultPropertyInclusion: NON_NULL
     serialization:
       indent_output: true

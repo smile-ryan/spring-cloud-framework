@@ -1,6 +1,5 @@
 package com.github.smile.ryan.framework.auth.model.response;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import java.util.Date;
@@ -9,8 +8,8 @@ import org.springframework.http.HttpStatus;
 
 /**
  * <pre>
- * 名称：HttpResponse
- * 描述：HttpResponse.java
+ * 名称：MessageResponse
+ * 描述：MessageResponse.java
  * </pre>
  *
  * @author <a href="mailto:smile.ryan@outlook.com">Ryan Chen</a>
@@ -19,8 +18,7 @@ import org.springframework.http.HttpStatus;
 @Data
 @JacksonXmlRootElement(localName = "response")
 @JsonPropertyOrder({"status", "message", "data", "timestamp"})
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
-public final class HttpResponse<T> {
+public final class MessageResponse<T> {
 
     private Integer status;
 
@@ -32,53 +30,53 @@ public final class HttpResponse<T> {
 
     private Date timestamp;
 
-    public static <T> HttpResponse<T> ok() {
-        return new HttpResponse<T>().status(HttpStatus.OK.value())
+    public static <T> MessageResponse<T> ok() {
+        return new MessageResponse<T>().status(HttpStatus.OK.value())
             .message(HttpStatus.OK.getReasonPhrase())
             .timestamp(new Date());
     }
 
-    public static <T> HttpResponse<T> ok(T data) {
-        return new HttpResponse<T>().status(HttpStatus.OK.value())
+    public static <T> MessageResponse<T> ok(T data) {
+        return new MessageResponse<T>().status(HttpStatus.OK.value())
             .message(HttpStatus.OK.getReasonPhrase())
             .data(data)
             .timestamp(new Date());
     }
 
-    public static <T> HttpResponse<T> error(Integer status, String message) {
-        return new HttpResponse<T>().status(status)
+    public static <T> MessageResponse<T> error(Integer status, String message) {
+        return new MessageResponse<T>().status(status)
             .message(message)
             .timestamp(new Date());
     }
 
-    public static <T> HttpResponse<T> error(Integer status, String message, T data) {
-        return new HttpResponse<T>().status(status)
+    public static <T> MessageResponse<T> error(Integer status, String message, T data) {
+        return new MessageResponse<T>().status(status)
             .message(message)
             .data(data)
             .timestamp(new Date());
     }
 
-    public HttpResponse<T> status(Integer status) {
+    public MessageResponse<T> status(Integer status) {
         this.status = status;
         return this;
     }
 
-    public HttpResponse<T> error(String error) {
+    public MessageResponse<T> error(String error) {
         this.error = error;
         return this;
     }
 
-    public HttpResponse<T> message(String message) {
+    public MessageResponse<T> message(String message) {
         this.message = message;
         return this;
     }
 
-    public HttpResponse<T> timestamp(Date timestamp) {
+    public MessageResponse<T> timestamp(Date timestamp) {
         this.timestamp = timestamp;
         return this;
     }
 
-    public HttpResponse<T> data(T data) {
+    public MessageResponse<T> data(T data) {
         this.data = data;
         return this;
     }
