@@ -2,6 +2,7 @@ package com.github.smile.ryan.framework.auth.web.rest;
 
 import com.github.smile.ryan.framework.auth.common.service.AuthTokenService;
 import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.AccessTokenConverter;
+import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,8 +45,15 @@ public class AuthRestController {
     }
 
     @RequestMapping(value = "/check_token", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Map<String, ?> checkToken(@RequestParam("token") String value, @RequestParam("resource_server_id") String resourceServerId) {
-        OAuth2AccessToken token = authTokenService.readAccessToken(value);
+    public Map<String, ?> checkToken(@RequestParam("token") String tokenValue, HttpServletRequest request) {
+        String authorization = request.getHeader("Authorization");
+        String substring = authorization.trim().substring(6);
+        String client = new String(Base64Utils.decode(substring.getBytes()));
+        String[] split = client.split(":");
+        String clientId = split[0];
+        String clientSecrect = split[1];
+
+        OAuth2AccessToken token = authTokenService.readAccessToken(tokenValue);
         if (token == null) {
             throw new InvalidTokenException("Token was not recognised");
         }

@@ -70,8 +70,7 @@ public class AuthWebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .requestMatchers()
-            .antMatchers("/auth/**", "/index", "/", properties.getLoginPage(),
-                properties.getLoginProcessUrl())
+            .antMatchers("/auth/**", "/index", "/", properties.getLoginPage(), properties.getLoginProcessUrl())
             .and()
             .authorizeRequests()
             .antMatchers(properties.getLoginPage(), properties.getLoginProcessUrl())

@@ -19,7 +19,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
             .antMatchers("/login", "/auth/code").permitAll()
             .anyRequest()
-//        .authenticated();
+//            .authenticated();
             .access("@permissionService.hasPermission(request)");
     }
 

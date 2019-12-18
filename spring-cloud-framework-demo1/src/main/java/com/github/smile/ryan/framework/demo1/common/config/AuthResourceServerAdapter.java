@@ -10,6 +10,7 @@
 //import org.springframework.http.MediaType;
 //import org.springframework.http.converter.HttpMessageConverter;
 //import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+//import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 //import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 //import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 //import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
@@ -42,11 +43,21 @@
 //        .tokenServices(tokenServices());
 //  }
 //
+//    @Override
+//    public void configure(HttpSecurity http) throws Exception {
+//        http.antMatcher("/**")
+//            .authorizeRequests()
+//            .antMatchers("/login", "/auth/code").permitAll()
+//            .anyRequest()
+//            .authenticated();
+////            .access("@permissionService.hasPermission(request)");
+//    }
+//
 //  @Bean
 //  public ResourceServerTokenServices tokenServices() {
 //    RemoteTokenServices remoteTokenServices = new RemoteTokenServices();
 //    remoteTokenServices.setCheckTokenEndpointUrl("http://localhost:8081/auth/check_token");
-//    remoteTokenServices.setClientId("client");
+//    remoteTokenServices.setClientId("client2");
 //    remoteTokenServices.setClientSecret("123456");
 //    remoteTokenServices.setRestTemplate(restTemplate());
 //    remoteTokenServices.setAccessTokenConverter(accessTokenConverter());
