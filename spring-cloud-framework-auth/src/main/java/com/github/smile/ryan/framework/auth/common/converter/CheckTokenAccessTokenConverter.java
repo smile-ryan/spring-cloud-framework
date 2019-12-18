@@ -33,8 +33,7 @@ public class CheckTokenAccessTokenConverter implements AccessTokenConverter {
 
     @Override
     public Map<String, ?> convertAccessToken(OAuth2AccessToken token, OAuth2Authentication authentication) {
-        Map<String, Object> claims = (Map<String, Object>) this.accessTokenConverter
-            .convertAccessToken(token, authentication);
+        Map<String, Object> claims = (Map<String, Object>) this.accessTokenConverter.convertAccessToken(token, authentication);
 
         // gh-1070
         claims.put("active", true);    // Always true if token exists and not expired

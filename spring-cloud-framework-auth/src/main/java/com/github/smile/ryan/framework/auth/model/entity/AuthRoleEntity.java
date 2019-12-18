@@ -20,4 +20,6 @@ public class AuthRoleEntity extends BaseEntity {
 
     private String roleName;
 
+    private Long clientId;
+
 }

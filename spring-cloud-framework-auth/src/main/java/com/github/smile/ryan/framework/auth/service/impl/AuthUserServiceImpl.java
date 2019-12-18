@@ -26,5 +26,4 @@ public class AuthUserServiceImpl implements AuthUserService {
         return authUserRepository.findByUserName(userName);
     }
 
-
 }

@@ -1,5 +1,6 @@
 package com.github.smile.ryan.framework.auth.service;
 
+import com.github.smile.ryan.framework.auth.model.request.AuthPermissionRequest;
 import com.github.smile.ryan.framework.auth.model.response.AuthPermissionResponse;
 import java.util.List;
 
@@ -17,5 +18,7 @@ public interface AuthPermissionService {
     List<AuthPermissionResponse> findAllByUserId(Long userId);
 
     List<AuthPermissionResponse> findAllByRoleId(Long roleId);
+
+    List<AuthPermissionResponse> findPermissionsByParameters(AuthPermissionRequest permissionRequest);
 
 }

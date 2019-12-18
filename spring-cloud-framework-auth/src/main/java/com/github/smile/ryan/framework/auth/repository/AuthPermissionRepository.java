@@ -1,7 +1,9 @@
 package com.github.smile.ryan.framework.auth.repository;
 
 import com.github.smile.ryan.framework.auth.model.entity.AuthPermissionEntity;
+import com.github.smile.ryan.framework.auth.model.request.AuthPermissionRequest;
 import java.util.List;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Repository;
  * @author <a href="mailto:smile.ryan@outlook.com">Ryan Chen</a>
  * @since v1.0.0
  */
+@Mapper
 @Repository
 public interface AuthPermissionRepository {
 
@@ -29,7 +32,6 @@ public interface AuthPermissionRepository {
         + "and r.is_deleted = 0 and rp.is_deleted = 0 and p.is_deleted = 0")
     List<AuthPermissionEntity> findAllByUserId(@Param("userId") Long userId);
 
-
     @Select("select p.* "
         + "from auth_role r "
         + "left join auth_role_permission rp on rp.role_id = r.id "
@@ -37,5 +39,25 @@ public interface AuthPermissionRepository {
         + "where "
         + "r.id = #{roleId} and r.is_deleted = 0 and rp.is_deleted = 0 and p.is_deleted = 0")
     List<AuthPermissionEntity> findAllByRoleId(@Param("roleId") Long roleId);
+
+    @Select("<script>"
+        + "select p.* "
+        + "from auth_user u "
+        + "left join auth_user_role ur on u.id = ur.user_id "
+        + "left join auth_role r on ur.role_id = r.id "
+        + "left join auth_role_permission rp on rp.role_id = r.id "
+        + "left join auth_permission p on rp.permission_id = p.id "
+        + "where "
+        + "u.is_deleted = 0 and ur.is_deleted = 0 "
+        + "and r.is_deleted = 0 and rp.is_deleted = 0 and p.is_deleted = 0"
+        + "<if test = '#{permission.userId} != null'>"
+        + "and u.id = #{permission.userId} "
+        + "</if>"
+        + "<if test = '#{permission.clientId} != null'>"
+        + "and r.client_id = #{permission.clientId} "
+        + "and p.client_id = #{permission.clientId} "
+        + "</if>"
+        + "</script>")
+    List<AuthPermissionEntity> findPermissionsByParameters(@Param("permission") AuthPermissionRequest permissionRequest);
 
 }

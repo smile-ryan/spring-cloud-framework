@@ -1,12 +1,12 @@
-package com.github.smile.ryan.framework.auth.model.entity;
+package com.github.smile.ryan.framework.auth.model.request;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
  * <pre>
- * 名称：AuthUserRoleEntity
- * 描述：AuthUserRoleEntity.java
+ * 名称：AuthRoleResponse
+ * 描述：AuthRoleResponse.java
  * </pre>
  *
  * @author <a href="mailto:smile.ryan@outlook.com">Ryan Chen</a>
@@ -14,10 +14,16 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class AuthUserRoleEntity extends BaseEntity {
+public class AuthRoleRequest extends BaseRequest {
 
     private Long userId;
 
     private Long roleId;
+
+    private String roleCode;
+
+    private String roleName;
+
+    private Long clientId;
 
 }

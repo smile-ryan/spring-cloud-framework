@@ -1,4 +1,4 @@
-package com.github.smile.ryan.framework.auth.model.entity;
+package com.github.smile.ryan.framework.auth.model.request;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,7 +14,13 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class AuthPermissionEntity extends BaseEntity {
+public class AuthPermissionRequest extends BaseRequest {
+
+    private Long userId;
+
+    private Long roleId;
+
+    private Long permissionId;
 
     private String permissionCode;
 

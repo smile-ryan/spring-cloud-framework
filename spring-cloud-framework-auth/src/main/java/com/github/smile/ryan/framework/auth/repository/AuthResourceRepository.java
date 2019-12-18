@@ -1,6 +1,7 @@
 package com.github.smile.ryan.framework.auth.repository;
 
 import com.github.smile.ryan.framework.auth.model.entity.AuthResourceEntity;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Repository;
  * @author <a href="mailto:smile.ryan@outlook.com">Ryan Chen</a>
  * @since v1.0.0
  */
+@Mapper
 @Repository
 public interface AuthResourceRepository {
 

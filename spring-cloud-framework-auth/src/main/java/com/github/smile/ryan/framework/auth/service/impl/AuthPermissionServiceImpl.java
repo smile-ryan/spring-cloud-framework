@@ -2,6 +2,7 @@ package com.github.smile.ryan.framework.auth.service.impl;
 
 import com.github.smile.ryan.framework.auth.common.util.BeanUtils;
 import com.github.smile.ryan.framework.auth.model.entity.AuthPermissionEntity;
+import com.github.smile.ryan.framework.auth.model.request.AuthPermissionRequest;
 import com.github.smile.ryan.framework.auth.model.response.AuthPermissionResponse;
 import com.github.smile.ryan.framework.auth.model.response.AuthResourceResponse;
 import com.github.smile.ryan.framework.auth.repository.AuthPermissionRepository;
@@ -48,6 +49,16 @@ public class AuthPermissionServiceImpl implements AuthPermissionService {
             AuthPermissionResponse permissionResponse = new AuthPermissionResponse();
             BeanUtils.copyProperties(permissionEntity, permissionResponse);
             permissionResponse.setResource(resourceResponse);
+            return permissionResponse;
+        }).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<AuthPermissionResponse> findPermissionsByParameters(AuthPermissionRequest permissionRequest) {
+        List<AuthPermissionEntity> permissionEntities = authPermissionRepository.findPermissionsByParameters(permissionRequest);
+        return permissionEntities.stream().map(permissionEntity -> {
+            AuthPermissionResponse permissionResponse = new AuthPermissionResponse();
+            BeanUtils.copyProperties(permissionEntity, permissionResponse);
             return permissionResponse;
         }).collect(Collectors.toList());
     }

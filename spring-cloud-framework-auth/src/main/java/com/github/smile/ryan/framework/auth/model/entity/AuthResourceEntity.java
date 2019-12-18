@@ -36,5 +36,7 @@ public class AuthResourceEntity extends BaseEntity {
 
     private Long parentId;
 
+    private Long clientId;
+
 
 }

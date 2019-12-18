@@ -2,6 +2,7 @@ package com.github.smile.ryan.framework.auth.service.impl;
 
 import com.github.smile.ryan.framework.auth.common.util.BeanUtils;
 import com.github.smile.ryan.framework.auth.model.entity.AuthRoleEntity;
+import com.github.smile.ryan.framework.auth.model.request.AuthRoleRequest;
 import com.github.smile.ryan.framework.auth.model.response.AuthPermissionResponse;
 import com.github.smile.ryan.framework.auth.model.response.AuthRoleResponse;
 import com.github.smile.ryan.framework.auth.repository.AuthRoleRepository;
@@ -37,6 +38,16 @@ public class AuthRoleServiceImpl implements AuthRoleService {
             AuthRoleResponse roleResponse = new AuthRoleResponse();
             BeanUtils.copyProperties(roleEntity, roleResponse);
             roleResponse.setPermissions(permissionResponses);
+            return roleResponse;
+        }).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<AuthRoleResponse> findRolesByParameters(AuthRoleRequest roleRequest) {
+        List<AuthRoleEntity> roleEntities = authRoleRepository.findRolesByParameters(roleRequest);
+        return roleEntities.stream().map(roleEntity -> {
+            AuthRoleResponse roleResponse = new AuthRoleResponse();
+            BeanUtils.copyProperties(roleEntity, roleResponse);
             return roleResponse;
         }).collect(Collectors.toList());
     }

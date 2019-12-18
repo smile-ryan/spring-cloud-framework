@@ -1,6 +1,5 @@
 package com.github.smile.ryan.framework.auth.model.entity;
 
-import javax.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -17,35 +16,34 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class AuthClientEntity extends BaseEntity {
 
-    @NotNull
+    public static final String PERMISSION_TYPE_1 = "Role-Based-Access-Control";
+    public static final String PERMISSION_TYPE_2 = "Resource-Based-Access-Control";
+
     private String clientId;
 
     private String resourceIds;
 
     private Boolean isSecretRequired;
 
-    @NotNull
     private String clientSecret;
 
     private Boolean isScoped;
 
     private String scope;
 
-    @NotNull
     private String authorizedGrantTypes;
 
-    @NotNull
     private String registeredRedirectUri;
 
     private String authorities;
 
     private Boolean isAutoApprove;
 
-    @NotNull
     private Integer accessTokenValiditySeconds;
 
-    @NotNull
     private Integer refreshTokenValiditySeconds;
+
+    private String permissionType;
 
 }
 

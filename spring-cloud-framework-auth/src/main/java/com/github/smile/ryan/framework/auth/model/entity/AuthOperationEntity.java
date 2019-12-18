@@ -20,4 +20,6 @@ public class AuthOperationEntity extends BaseEntity {
 
     private String operationName;
 
+    private Long clientId;
+
 }
